@@ -6,4 +6,7 @@
 	<color name="half_black">#cc000000</color>
 	<color name="white">#ffffffff</color>
 	<color name="arrow_bg">#e5e5e5</color>
+	<color name="rount_list_title_color">#434343</color>
+	<color name="rount_list_num_color">#2b5e89</color>
+	<color name="rount_list_introduce_color">#464646</color>
 </resources>
