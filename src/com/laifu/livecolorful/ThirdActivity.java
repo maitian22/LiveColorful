@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -14,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 
 public class ThirdActivity extends LiveBaseActivity {
@@ -51,6 +53,8 @@ public class ThirdActivity extends LiveBaseActivity {
 	private int mCurrentPage;
 	private static String CURRENT_PAGE = "current_page";
 	private ListView my_rount_list;
+	private RelativeLayout my_rount,my_attation,my_fans,my_info;
+	private Context mContext;
 
 	private OnClickListener mylinearListner = new LinearLayout.OnClickListener() {
 		@Override
@@ -71,26 +75,35 @@ public class ThirdActivity extends LiveBaseActivity {
 				break;
 			}
 			mPre.edit().putInt(CURRENT_PAGE, mCurrentPage).commit();
-			initHighlightArrow();
+			initHighlight();
 		}
 
 	};
 
-	private void initHighlightArrow() {
+	private void initHighlight() {
 		Log.i(TAG,"initHighlightArrow,mCurrentPage:"+mCurrentPage);
 		my_rount_arrow.setVisibility(android.view.View.INVISIBLE);
 		my_fans_arrow.setVisibility(android.view.View.INVISIBLE);
 		my_attation_arrow.setVisibility(android.view.View.INVISIBLE);
 		my_info_arrow.setVisibility(android.view.View.INVISIBLE);
 		
+		my_rount.setVisibility(android.view.View.INVISIBLE);
+		my_fans.setVisibility(android.view.View.INVISIBLE);
+		my_attation.setVisibility(android.view.View.INVISIBLE);
+		my_info.setVisibility(android.view.View.INVISIBLE);
+		
 		if (mCurrentPage == 0) {
 			my_rount_arrow.setVisibility(android.view.View.VISIBLE);
+			my_rount.setVisibility(android.view.View.VISIBLE);
 		} else if (mCurrentPage == 1) {
 			my_attation_arrow.setVisibility(android.view.View.VISIBLE);
+			my_attation.setVisibility(android.view.View.VISIBLE);
 		} else if (mCurrentPage == 2) {
 			my_fans_arrow.setVisibility(android.view.View.VISIBLE);
+			my_fans.setVisibility(android.view.View.VISIBLE);
 		} else if (mCurrentPage == 3) {
 			my_info_arrow.setVisibility(android.view.View.VISIBLE);
+			my_info.setVisibility(android.view.View.VISIBLE);
 		}
 	}
 	private List<Map<String, Object>> getData() {
@@ -103,8 +116,8 @@ public class ThirdActivity extends LiveBaseActivity {
         list.add(map);
  
         map = new HashMap<String, Object>();
-        map.put("title", "G2");
-        map.put("info", "google 2");
+        map.put("title", "建筑系12级3班 同路人");
+        map.put("info", "52个成员     47个行程");
         map.put("img", R.drawable.progressbar);
         list.add(map);
  
@@ -146,19 +159,23 @@ public class ThirdActivity extends LiveBaseActivity {
 		my_rount_linear.setOnClickListener(mylinearListner);
 		my_rount_arrow = (ImageView)findViewById(R.id.my_rount_arrow);
 		my_rount_list = (ListView)findViewById(R.id.my_rount_list);
+		my_rount = (RelativeLayout)findViewById(R.id.my_rount);
 		InitRountListView();
 
 		my_fans_linear = (LinearLayout) findViewById(R.id.my_fans_linear);
 		my_fans_linear.setOnClickListener(mylinearListner);
 		my_fans_arrow = (ImageView)findViewById(R.id.my_fans_arrow);
+		my_fans = (RelativeLayout)findViewById(R.id.my_fans);
 
 		my_attation_linear = (LinearLayout) findViewById(R.id.my_attation_linear);
 		my_attation_linear.setOnClickListener(mylinearListner);
 		my_attation_arrow = (ImageView)findViewById(R.id.my_attation_arrow);
+		my_attation = (RelativeLayout)findViewById(R.id.my_attation);
 
 		my_info_linear = (LinearLayout) findViewById(R.id.my_info_linear);
 		my_info_linear.setOnClickListener(mylinearListner);
 		my_info_arrow = (ImageView)findViewById(R.id.my_info_arrow);
+		my_info = (RelativeLayout)findViewById(R.id.my_info);
 	}
 	
 	public void initTitle(){
@@ -172,12 +189,13 @@ public class ThirdActivity extends LiveBaseActivity {
 		// TODO Auto-generated method stub
 		super.onResume();
 		mCurrentPage = mPre.getInt(CURRENT_PAGE, 0);
-		initHighlightArrow();
+		initHighlight();
 	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		mContext = this;
 //		setContentView(R.layout.activity_my_account);
 
 		
