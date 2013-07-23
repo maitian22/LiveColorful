@@ -104,4 +104,6 @@ public class Constant{
 	public static final String IMG = "img";
 	public static final String IMGURL = "imgurl";
 	
+	public static final String HEAD_PORTRAIT_PATH = "head_protrait_path";
+	public static String CURRENT_THIRD_ACTIVITY_PAGE = "current_third_activity_page";
 }
