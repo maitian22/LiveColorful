@@ -58,8 +58,9 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="@dimen/activity_my_info_margin_left"
+                    android:layout_marginRight="@dimen/activity_my_info_margin_right"
+                    android:layout_marginTop="@dimen/activity_my_info_margin_top"
                     android:orientation="horizontal" >
 
                     <TextView
@@ -71,132 +72,200 @@
                     <EditText
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginLeft="60dp"
                         android:background="@null"
                         android:cursorVisible="false"
+                        android:editable="false"
                         android:text="Codykwok"
                         android:textSize="20dp" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/black_percent_20" />
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_my_info_margin_left"
+                    android:layout_marginRight="@dimen/activity_my_info_margin_right"
+                    android:layout_marginTop="@dimen/activity_my_info_margin_top"
                     android:orientation="horizontal" >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="20dp"
                         android:text="昵称"
                         android:textSize="20dp" />
 
                     <EditText
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="20dp"
+                        android:layout_marginLeft="@dimen/activity_my_info_edittext_margin_left"
+                        android:background="@null"
+                        android:cursorVisible="false"
                         android:editable="false"
                         android:text="丽莎-GAO"
                         android:textSize="20dp" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/black_percent_20" />
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_my_info_margin_left"
+                    android:layout_marginRight="@dimen/activity_my_info_margin_right"
+                    android:layout_marginTop="@dimen/activity_my_info_margin_top"
                     android:orientation="horizontal" >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="20dp"
                         android:text="性别"
                         android:textSize="20dp" />
 
                     <EditText
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="20dp"
+                        android:layout_marginLeft="@dimen/activity_my_info_edittext_margin_left"
+                        android:background="@null"
+                        android:cursorVisible="false"
                         android:editable="false"
                         android:text="女"
                         android:textSize="20dp" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/black_percent_20" />
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_my_info_margin_left"
+                    android:layout_marginRight="@dimen/activity_my_info_margin_right"
+                    android:layout_marginTop="@dimen/activity_my_info_margin_top"
                     android:orientation="horizontal" >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="20dp"
                         android:text="地区"
                         android:textSize="20dp" />
 
                     <EditText
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/activity_my_info_edittext_margin_left"
+                        android:background="@null"
+                        android:cursorVisible="false"
                         android:editable="false"
                         android:text="北京" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/black_percent_20" />
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_my_info_margin_left"
+                    android:layout_marginRight="@dimen/activity_my_info_margin_right"
+                    android:layout_marginTop="@dimen/activity_my_info_margin_top"
                     android:orientation="horizontal" >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="20dp"
                         android:text="电话"
                         android:textSize="20dp" />
 
                     <EditText
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="20dp"
+                        android:layout_marginLeft="@dimen/activity_my_info_edittext_margin_left"
+                        android:background="@null"
+                        android:cursorVisible="false"
                         android:editable="false"
                         android:text="15901234567"
                         android:textSize="20dp" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/black_percent_20" />
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_my_info_margin_left"
+                    android:layout_marginRight="@dimen/activity_my_info_margin_right"
+                    android:layout_marginTop="@dimen/activity_my_info_margin_top"
                     android:orientation="horizontal" >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="20dp"
                         android:text="邮箱"
                         android:textSize="20dp" />
 
                     <EditText
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="20dp"
+                        android:layout_marginLeft="@dimen/activity_my_info_edittext_margin_left"
+                        android:background="@null"
+                        android:cursorVisible="false"
                         android:editable="false"
                         android:text="lisagao@hotmai.com"
                         android:textSize="20dp" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/black_percent_20" />
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_my_info_margin_left"
+                    android:layout_marginRight="@dimen/activity_my_info_margin_right"
+                    android:layout_marginTop="@dimen/activity_my_info_margin_top"
                     android:orientation="horizontal" >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="20dp"
                         android:text="简介"
                         android:textSize="20dp" />
 
                     <EditText
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="20dp"
+                        android:layout_marginLeft="@dimen/activity_my_info_edittext_margin_left"
+                        android:background="@null"
+                        android:cursorVisible="false"
                         android:editable="false"
                         android:text="农夫山泉有点甜 农夫山泉有点甜"
                         android:textSize="20dp" />
