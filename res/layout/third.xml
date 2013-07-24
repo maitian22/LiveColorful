@@ -44,7 +44,7 @@
                 android:background="@color/black" />
 
             <TextView
-                android:id="@+id/user_name"
+                android:id="@+id/nick_name_disp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/head_portrait"
@@ -56,10 +56,10 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/user_signature"
+                android:id="@+id/brief_intro_disp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/user_name"
+                android:layout_below="@id/nick_name_disp"
                 android:ellipsize="end"
                 android:gravity="right"
                 android:paddingLeft="55dp"

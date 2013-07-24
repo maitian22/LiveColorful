@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.laifu.livecolorful.tool.Constant;
-
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -28,6 +26,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
+
+import com.laifu.livecolorful.tool.Constant;
 
 public class ThirdActivity extends LiveBaseActivity {
 
@@ -61,7 +62,7 @@ public class ThirdActivity extends LiveBaseActivity {
 			my_info_linear;
 	private ImageView my_rount_arrow, my_fans_arrow, my_attation_arrow,
 			my_info_arrow;
-	private SharedPreferences mPre;
+	public SharedPreferences mPre;
 	private int mCurrentPage;
 	private ListView my_rount_list;
 	private RelativeLayout my_rount, my_attation, my_fans, my_info;
@@ -69,6 +70,7 @@ public class ThirdActivity extends LiveBaseActivity {
 	private MyInfoCtrl mMyInfoCtrl;
 	private String mheadPicPath = "";
 	private ImageView head_portrait;
+	private TextView mNickName, mBriefIntro;
 
 	private OnClickListener mylinearListner = new LinearLayout.OnClickListener() {
 		@Override
@@ -88,7 +90,9 @@ public class ThirdActivity extends LiveBaseActivity {
 				mCurrentPage = 3;
 				break;
 			}
-			mPre.edit().putInt(Constant.CURRENT_THIRD_ACTIVITY_PAGE, mCurrentPage).commit();
+			mPre.edit()
+					.putInt(Constant.CURRENT_THIRD_ACTIVITY_PAGE, mCurrentPage)
+					.commit();
 			initHighlight();
 		}
 
@@ -196,6 +200,9 @@ public class ThirdActivity extends LiveBaseActivity {
 		mMyInfoCtrl = new MyInfoCtrl(this, my_info);
 
 		head_portrait = (ImageView) findViewById(R.id.head_portrait);
+
+		mNickName = (TextView) findViewById(R.id.nick_name_disp);
+		mBriefIntro = (TextView) findViewById(R.id.brief_intro_disp);
 	}
 
 	public void initTitle() {
@@ -203,40 +210,49 @@ public class ThirdActivity extends LiveBaseActivity {
 		title.setText("我的账号");
 		right.setVisibility(View.GONE);
 	}
-	
-	private void InitHeadPortraitImage(Uri uri){
-		Bitmap bitmap,zoombitmap;
+
+	private void InitHeadPortraitImage(Uri uri) {
+		Bitmap bitmap, zoombitmap;
 		try {
-			bitmap = BitmapFactory
-					.decodeStream(getContentResolver().openInputStream(uri));
-			zoombitmap = zoomImage(bitmap,132,132);
+			bitmap = BitmapFactory.decodeStream(getContentResolver()
+					.openInputStream(uri));
+			zoombitmap = zoomImage(bitmap, 132, 132);
 			head_portrait.setImageBitmap(zoombitmap);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
+	public void initNickNameAndBriefIntro() {
+		mNickName.setText(mPre.getString(Constant.MY_INFO_FEATURE[1],
+				Constant.DEFAULT_NICK_NAME));
+		mBriefIntro.setText(mPre.getString(Constant.MY_INFO_FEATURE[6],
+				Constant.DEFAULT_BRIEF_INTRO));
+	}
+
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
 		mCurrentPage = mPre.getInt(Constant.CURRENT_THIRD_ACTIVITY_PAGE, 0);
 		mheadPicPath = mPre.getString(Constant.HEAD_PORTRAIT_PATH, "");
-		if(!mheadPicPath.equals("")){
-			Log.i(TAG,"----->>>>>>>mheadPicPath:"+mheadPicPath);
-			if(head_portrait!=null){
-				Log.i(TAG,"------>>>>>>head_portrait!=null");
-				Uri uri = Uri.parse("file://"+ mheadPicPath); 
+		if (!mheadPicPath.equals("")) {
+			Log.i(TAG, "----->>>>>>>mheadPicPath:" + mheadPicPath);
+			if (head_portrait != null) {
+				Log.i(TAG, "------>>>>>>head_portrait!=null");
+				Uri uri = Uri.parse("file://" + mheadPicPath);
 				InitHeadPortraitImage(uri);
 			}
 		}
+		initNickNameAndBriefIntro();
 		initHighlight();
 	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mContext = this; 
+		mContext = this;
 		// setContentView(R.layout.activity_my_account);
 	}
 
@@ -266,17 +282,17 @@ public class ThirdActivity extends LiveBaseActivity {
 					.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 			cursor.moveToFirst();
 			String path = cursor.getString(colunm_index);
-			Log.i(TAG,"head portrait path:"+path);
+			Log.i(TAG, "head portrait path:" + path);
 			mPre.edit().putString(Constant.HEAD_PORTRAIT_PATH, path).commit();
 			if (path.endsWith("jpg") || path.endsWith("png")) {
 				mheadPicPath = path;
-				Bitmap bitmap,zoombitmap;
+				Bitmap bitmap, zoombitmap;
 				try {
 					bitmap = BitmapFactory
 							.decodeStream(cr.openInputStream(uri));
-					Log.i(TAG,"mPortrait width:"+head_portrait.getWidth()
-							+"mPortrait height:"+head_portrait.getHeight());
-					zoombitmap = zoomImage(bitmap,132,132);
+					Log.i(TAG, "mPortrait width:" + head_portrait.getWidth()
+							+ "mPortrait height:" + head_portrait.getHeight());
+					zoombitmap = zoomImage(bitmap, 132, 132);
 					head_portrait.setImageBitmap(zoombitmap);
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block

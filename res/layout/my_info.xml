@@ -76,6 +76,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="60dp"
                         android:background="@null"
+                        android:minEms="8"
                         android:cursorVisible="false"
                         android:text="Codykwok"
                         android:textSize="20dp" />
@@ -109,6 +110,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/activity_my_info_edittext_margin_left"
                         android:background="@null"
+                        android:minEms="8"
                         android:cursorVisible="false"
                         android:text="丽莎-GAO"
                         android:textSize="20dp" />
@@ -142,6 +144,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/activity_my_info_edittext_margin_left"
                         android:background="@null"
+                        android:minEms="8"
                         android:cursorVisible="false"
                         android:text="女"
                         android:textSize="20dp" />
@@ -175,6 +178,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/activity_my_info_edittext_margin_left"
                         android:background="@null"
+                        android:minEms="8"
                         android:cursorVisible="false"
                         android:text="北京" />
                 </LinearLayout>
@@ -207,6 +211,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/activity_my_info_edittext_margin_left"
                         android:background="@null"
+                        android:minEms="8"
                         android:cursorVisible="false"
                         android:text="15901234567"
                         android:textSize="20dp" />
@@ -240,6 +245,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/activity_my_info_edittext_margin_left"
                         android:background="@null"
+                        android:minEms="8"
                         android:cursorVisible="false"
                         android:text="lisagao@hotmai.com"
                         android:textSize="20dp" />
@@ -273,6 +279,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/activity_my_info_edittext_margin_left"
                         android:background="@null"
+                        android:minEms="8"
                         android:cursorVisible="false"
                         android:text="农夫山泉有点甜 农夫山泉有点甜"
                         android:textSize="20dp" />

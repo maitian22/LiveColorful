@@ -10,15 +10,15 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.laifu.livecolorful.tool.Constant;
+
 public class MyInfoCtrl implements Button.OnClickListener {
-	private Context mContext;
 	private RelativeLayout mRel;
 	private static Button editInfo, updateheadPic, modifyCover;
 	private ThirdActivity mActivity;
-	private ArrayList<TextView> mTextArray;
 	private ArrayList<EditText> mEditArray;
-	private int[] mTextNameId = { R.id.text_id, R.id.nickname, R.id.gender,
-			R.id.area, R.id.tel, R.id.email, R.id.briefIntro };
+	// private int[] mTextNameId = { R.id.text_id, R.id.nickname, R.id.gender,
+	// R.id.area, R.id.tel, R.id.email, R.id.briefIntro };
 	private int[] mEditNameId = { R.id.edit_id, R.id.edit_nickname,
 			R.id.edit_gender, R.id.edit_area, R.id.edit_tel, R.id.edit_email,
 			R.id.edit_briefIntro };
@@ -26,8 +26,6 @@ public class MyInfoCtrl implements Button.OnClickListener {
 	public MyInfoCtrl(ThirdActivity c, RelativeLayout ml) {
 		mActivity = c;
 		mRel = ml;
-
-		mTextArray = new ArrayList<TextView>();
 		mEditArray = new ArrayList<EditText>();
 		initView();
 	}
@@ -42,10 +40,20 @@ public class MyInfoCtrl implements Button.OnClickListener {
 		modifyCover.setOnClickListener(this);
 
 		for (int i = 0; i < mEditNameId.length; i++) {
-			mTextArray.add((TextView) mRel.findViewById(mTextNameId[i]));
-			mEditArray.add((EditText) mRel.findViewById(mEditNameId[i]));
-			mEditArray.get(i).setOnClickListener(this);
+			// mTextArray.add((TextView) mRel.findViewById(mTextNameId[i]));
+			EditText mEdit = (EditText) mRel.findViewById(mEditNameId[i]);
+			String disText = mActivity.mPre.getString(Constant.MY_INFO_FEATURE[i], "");
+			mEdit.setText(disText);
+			mEditArray.add(mEdit);
 		}
+	}
+
+	private void saveEditInfomation() {
+		for (int i = 0; i < mEditArray.size(); i++) {
+			mActivity.mPre.edit().putString(Constant.MY_INFO_FEATURE[i],
+					mEditArray.get(i).getEditableText().toString()).commit();
+		}
+		mActivity.initNickNameAndBriefIntro();
 	}
 
 	@Override
@@ -63,9 +71,10 @@ public class MyInfoCtrl implements Button.OnClickListener {
 				editInfo.setBackgroundDrawable(mActivity.getResources()
 						.getDrawable(R.drawable.shape));
 				editInfo.setText(R.string.edit_info);
+				saveEditInfomation();
 			} else {
 				for (i = 0; i < mEditArray.size(); i++) {
-					mEditArray.get(i).setCursorVisible(true); 
+					mEditArray.get(i).setCursorVisible(true);
 					mEditArray.get(i).setClickable(true);
 					mEditArray.get(i).setFocusable(true);
 					mEditArray.get(i).setFocusableInTouchMode(true);
