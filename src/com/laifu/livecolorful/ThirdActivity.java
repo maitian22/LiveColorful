@@ -313,7 +313,7 @@ public class ThirdActivity extends LiveBaseActivity {
 		  View view = getWindow().getDecorView();  
 		  view.getWindowVisibleDisplayFrame(rect);  
 		  lay.height = dm.heightPixels - rect.top;  
-		  lay.width = dm.widthPixels;  
+		  lay.width = dm.widthPixels;     
 	}
 	
 	private void showPicDialog(){
