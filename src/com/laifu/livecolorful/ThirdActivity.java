@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,15 +16,18 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
@@ -301,14 +306,34 @@ public class ThirdActivity extends LiveBaseActivity {
 			}
 		}
 	}
-
+	private void setParams(android.view.WindowManager.LayoutParams lay) {  
+		  DisplayMetrics dm = new DisplayMetrics();  
+		  getWindowManager().getDefaultDisplay().getMetrics(dm);  
+		  Rect rect = new Rect();  
+		  View view = getWindow().getDecorView();  
+		  view.getWindowVisibleDisplayFrame(rect);  
+		  lay.height = dm.heightPixels - rect.top;  
+		  lay.width = dm.widthPixels;  
+	}
+	
+	private void showPicDialog(){
+	    Dialog dialog = new Dialog(this, R.style.showpicdialog);  
+	    dialog.setContentView(R.layout.my_info);  
+	    android.view.WindowManager.LayoutParams lay = dialog.getWindow().getAttributes();  
+	    setParams(lay);  
+	    dialog.show();  
+	}
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == 1) {
-			Uri uri = data.getData();
-			getHeadPic(uri);
+			if (data != null) {
+				showPicDialog();
+				Uri uri = data.getData();
+				getHeadPic(uri);
+			}
 		}
 	}
 

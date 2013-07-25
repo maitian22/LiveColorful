@@ -2,8 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/my_info"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:visibility="invisible" >
+    android:layout_height="match_parent" >
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -191,7 +190,7 @@
                     android:background="@color/black_percent_20" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="wrap_content"  
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/activity_my_info_margin_left"
                     android:layout_marginRight="@dimen/activity_my_info_margin_right"
@@ -283,6 +282,47 @@
                         android:cursorVisible="false"
                         android:text="农夫山泉有点甜 农夫山泉有点甜"
                         android:textSize="20dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/black_percent_20" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_my_info_margin_left"
+                    android:layout_marginRight="@dimen/activity_my_info_margin_right"
+                    android:layout_marginTop="@dimen/activity_my_info_margin_top"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="绑定"
+                        android:textSize="20dp" />
+
+                    <ImageView
+                        android:id="@+id/mPhone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/activity_my_info_edittext_margin_left"
+                        android:background="@drawable/iphone_0ff_btn"
+                        />
+                    <ImageView
+                        android:id="@+id/sina"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/sina_off_btn"
+                        />
+                    <ImageView
+                        android:id="@+id/qq"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/qq_off_btn"
+                        />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
