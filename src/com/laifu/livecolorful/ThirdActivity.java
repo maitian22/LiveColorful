@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -25,9 +24,11 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
@@ -278,7 +279,7 @@ public class ThirdActivity extends LiveBaseActivity {
 		return bitmap;
 	}
 
-	private void getHeadPic(Uri uri) {
+	private void setHeadPic() {
 		String[] pojo = { MediaStore.Images.Media.DATA };
 		Cursor cursor = managedQuery(uri, pojo, null, null, null);
 		if (cursor != null) {
@@ -306,33 +307,78 @@ public class ThirdActivity extends LiveBaseActivity {
 			}
 		}
 	}
-	private void setParams(android.view.WindowManager.LayoutParams lay) {  
-		  DisplayMetrics dm = new DisplayMetrics();  
-		  getWindowManager().getDefaultDisplay().getMetrics(dm);  
-		  Rect rect = new Rect();  
-		  View view = getWindow().getDecorView();  
-		  view.getWindowVisibleDisplayFrame(rect);  
-		  lay.height = dm.heightPixels - rect.top;  
-		  lay.width = dm.widthPixels;     
+
+	private void setParams(android.view.WindowManager.LayoutParams lay) {
+		DisplayMetrics dm = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(dm);
+		Rect rect = new Rect();
+		View view = getWindow().getDecorView();
+		view.getWindowVisibleDisplayFrame(rect);
+		lay.height = dm.heightPixels - rect.top;
+		lay.width = dm.widthPixels;
 	}
-	
-	private void showPicDialog(){
-	    Dialog dialog = new Dialog(this, R.style.showpicdialog);  
-	    dialog.setContentView(R.layout.my_info);  
-	    android.view.WindowManager.LayoutParams lay = dialog.getWindow().getAttributes();  
-	    setParams(lay);  
-	    dialog.show();  
+
+	public void setShowImagePic(Dialog dialog, Uri uri) {
+		WindowManager wm = (WindowManager) this
+				.getSystemService(Context.WINDOW_SERVICE);
+		ImageView mShowPic = (ImageView) dialog.findViewById(R.id.show_pic);
+		Bitmap bitmap = null;
+		try {
+			bitmap = BitmapFactory.decodeStream(getContentResolver()
+					.openInputStream(uri));
+			mShowPic.setScaleType(ScaleType.CENTER_CROP);
+			mShowPic.setImageBitmap(zoomImage(bitmap, wm.getDefaultDisplay()
+					.getWidth(), wm.getDefaultDisplay().getWidth()));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	
+
+	private Button canel_btn, pass_btn;
+	private Uri uri;
+	private Dialog dialog;
+	private Button.OnClickListener mBtnListener = new Button.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			if (v == pass_btn) {
+				setHeadPic();
+			}
+			dialog.dismiss();
+		}
+	};
+
+	public void showPicDialog() {
+		dialog = new Dialog(this, R.style.showpicdialog);
+
+		dialog.setContentView(R.layout.show_pic_dialog);
+		canel_btn = (Button) dialog.findViewById(R.id.canel_btn);
+		pass_btn = (Button) dialog.findViewById(R.id.pass_btn);
+		pass_btn.setOnClickListener(mBtnListener);
+		canel_btn.setOnClickListener(mBtnListener);
+		setShowImagePic(dialog, uri);
+		android.view.WindowManager.LayoutParams lay = dialog.getWindow()
+				.getAttributes();
+		setParams(lay);
+		dialog.show();
+	}
+
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == 1) {
 			if (data != null) {
-				showPicDialog();
-				Uri uri = data.getData();
-				getHeadPic(uri);
+				uri = data.getData();
+				ShowAlbumPicDialog mShowDialog = new ShowAlbumPicDialog(this,uri);
+				// showPicDialog();
 			}
 		}
 	}

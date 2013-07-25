@@ -98,6 +98,7 @@ public class MyInfoCtrl implements Button.OnClickListener {
 			intent.setType("image/*");
 			intent.setAction(Intent.ACTION_GET_CONTENT);
 			mActivity.startActivityForResult(intent, 1);
+			
 		} else if (v == modifyCover) {
 
 		}
