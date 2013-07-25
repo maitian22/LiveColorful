@@ -1,5 +1,8 @@
 package com.laifu.livecolorful.tool;
 
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
+
 /**
  * 
  * @author 类名：Constant.java 备注：常量类
@@ -104,11 +107,33 @@ public class Constant {
 	
 	// sharePreference name
 	public static final String HEAD_PORTRAIT_PATH = "head_protrait_path";
+	public static final String PICTURE_COVER_PATH = "picture_cover_path";
 	public static final String CURRENT_THIRD_ACTIVITY_PAGE = "current_third_activity_page";
 	public static final String DEFAULT_NICK_NAME = "利莎-GAO";
 	public static final String DEFAULT_BRIEF_INTRO = "农夫山泉有点田  农夫山泉有点田";
 	public static final String[] MY_INFO_FEATURE = { "ID", "nick_name",
 			"gender", "area", "tel", "email", "brief_intro"
 	};
+	public static int HEAD_PIC_CAPTURE = 1;
+	public static int PICTURE_COVER_CAPTUIE  = 2;
+	public static int RESULT_PICTURE_COVER = 3;
+	
+	
+	public static Bitmap zoomImage(Bitmap bgimage, double newWidth,
+			double newHeight) {
+		// 获取这个图片的宽和高
+		float width = bgimage.getWidth();
+		float height = bgimage.getHeight();
+		// 创建操作图片用的matrix对象
+		Matrix matrix = new Matrix();
+		// 计算宽高缩放率
+		float scaleWidth = ((float) newWidth) / width;
+		float scaleHeight = ((float) newHeight) / height;
+		// 缩放图片动作
+		matrix.postScale(scaleWidth, scaleHeight);
+		Bitmap bitmap = Bitmap.createBitmap(bgimage, 0, 0, (int) width,
+				(int) height, matrix, true);
+		return bitmap;
+	}
 
 }

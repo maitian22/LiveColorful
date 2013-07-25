@@ -7,11 +7,11 @@
         android:id="@+id/show_pic"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" 
-        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
         />
 	<RelativeLayout
 	    android:layout_width="fill_parent"
-	    android:layout_height="70dp"
+	    android:layout_height="80dp"
 	    android:layout_alignParentBottom="true" 
 	    android:background="@color/black_percent_85"
 	    >
@@ -21,7 +21,8 @@
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentLeft="true"
 	        android:layout_marginLeft="20dp"
-	        android:layout_centerVertical="true"
+	        android:layout_marginTop="8dp"
+	        android:gravity="center_vertical"
 	        android:background="@drawable/shape_showpic_dialog"
 	        android:textSize="20dp"
 	        android:textColor="@color/white"
@@ -30,8 +31,8 @@
 	    <TextView
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_centerInParent="true"
-			android:gravity="center_vertical"
+	        android:layout_centerHorizontal="true"
+	        android:layout_marginTop="8dp"
 	        android:textSize="25dp"
 	        android:text="上传封面"
 	        />
@@ -40,8 +41,8 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentRight="true"
-	        android:layout_centerVertical="true"
 	        android:layout_marginRight="20dp"
+	        android:layout_marginTop="8dp"
 	        android:textSize="20dp"
 	        android:textColor="@color/white"
 	        android:background="@drawable/shape_showpic_dialog_blue"

@@ -3,6 +3,7 @@ package com.laifu.livecolorful;
 import java.util.ArrayList;
 
 import android.content.Intent;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -100,7 +101,13 @@ public class MyInfoCtrl implements Button.OnClickListener {
 			mActivity.startActivityForResult(intent, 1);
 			
 		} else if (v == modifyCover) {
-
+		//	Intent intent = new Intent();
+		//	intent.setType("image/*");
+		//	intent.setAction(Intent.ACTION_GET_CONTENT);
+		//	mActivity.startActivityForResult(intent,2);
+			Intent intent = new Intent(Intent.ACTION_PICK, null);  
+            intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");  
+            mActivity.startActivityForResult(intent, Constant.PICTURE_COVER_CAPTUIE);  
 		}
 		for (i = 0; i < mEditArray.size(); i++) {
 			if (v.getId() == mEditArray.get(i).getId()) {
