@@ -1,31 +1,27 @@
 package com.laifu.livecolorful;
 
-import java.io.FileNotFoundException;
-
-import com.laifu.livecolorful.tool.Constant;
-
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.graphics.Rect;
-import android.net.Uri;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
+import com.laifu.livecolorful.tool.Constant;
+
 public abstract class ShowAlbumPicDialog extends Dialog implements
 		Button.OnClickListener {
-	Uri mUri;
-	Button cancel_btn, pass_btn;
-	ImageView mShowPic;
-	Context mContext;
-	WindowManager wm;
+	private String TAG = "ShowAlbumPicDialog";
+	private Button cancel_btn, pass_btn;
+	private ImageView mShowPic;
+	private Context mContext;
+	private WindowManager wm;
+	private Bitmap mBitmap;
 
 	public ShowAlbumPicDialog(Context context) {
 		super(context);
@@ -44,22 +40,28 @@ public abstract class ShowAlbumPicDialog extends Dialog implements
 	}
 
 	void SetShowPic() {
-		Bitmap bitmap = null;
+		int width = wm.getDefaultDisplay().getWidth();
+		int height = width*mBitmap.getHeight()/mBitmap.getWidth();
+		mShowPic.setScaleType(ScaleType.CENTER_CROP);
+		mShowPic.setImageBitmap(mBitmap);
+		mShowPic.setImageBitmap(Constant.zoomImage(mBitmap, width, height));
+		
+		/*Bitmap bitmap = null;
 		try {
 			bitmap = BitmapFactory.decodeStream(mContext.getContentResolver()
 					.openInputStream(mUri));
 			mShowPic.setScaleType(ScaleType.CENTER_CROP);
 			mShowPic.setImageBitmap(Constant.zoomImage(bitmap, wm.getDefaultDisplay()
-					.getWidth(), wm.getDefaultDisplay().getWidth()));
+					.getWidth(), ));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 
-	public ShowAlbumPicDialog(Context context, Uri uri) {
+	public ShowAlbumPicDialog(Context context, Bitmap mB) {
 		super(context, R.style.showpicdialog);
-		mUri = uri;
+		mBitmap = mB;
 		mContext = context;
 		setContentView(R.layout.show_pic_dialog);
 		wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);

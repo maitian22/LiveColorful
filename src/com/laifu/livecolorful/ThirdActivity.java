@@ -1,12 +1,17 @@
 package com.laifu.livecolorful;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +21,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
@@ -69,7 +75,7 @@ public class ThirdActivity extends LiveBaseActivity {
 	private RelativeLayout my_rount, my_attation, my_fans, my_info;
 	private Context mContext;
 	private MyInfoCtrl mMyInfoCtrl;
-	private String mheadPicPath = "",mPictureCoverPath="";
+	private String mheadPicPath = "", mPictureCoverPath = "";
 	private ImageView head_portrait;
 	private TextView mNickName, mBriefIntro;
 	private RelativeLayout mAccoutBg;
@@ -202,8 +208,8 @@ public class ThirdActivity extends LiveBaseActivity {
 		mMyInfoCtrl = new MyInfoCtrl(this, my_info);
 
 		head_portrait = (ImageView) findViewById(R.id.head_portrait);
-		mAccoutBg = (RelativeLayout)findViewById(R.id.account_bg);
-		
+		mAccoutBg = (RelativeLayout) findViewById(R.id.account_bg);
+
 		mNickName = (TextView) findViewById(R.id.nick_name_disp);
 		mBriefIntro = (TextView) findViewById(R.id.brief_intro_disp);
 	}
@@ -233,35 +239,38 @@ public class ThirdActivity extends LiveBaseActivity {
 		mBriefIntro.setText(mPre.getString(Constant.MY_INFO_FEATURE[6],
 				Constant.DEFAULT_BRIEF_INTRO));
 	}
-	void InitMyInfoPicture(View img,String path){
-		int width,height;
-		width=img.getLayoutParams().width;
-		height=img.getLayoutParams().height;
-		if(!path.equals("")){
+
+	void InitMyInfoPicture(View img, String path) {
+		int width, height;
+		width = img.getLayoutParams().width;
+		height = img.getLayoutParams().height;
+		if (!path.equals("")) {
 			Uri uri = Uri.parse("file://" + path);
 			Bitmap bitmap, zoombitmap;
 			try {
 				bitmap = BitmapFactory.decodeStream(getContentResolver()
 						.openInputStream(uri));
 				zoombitmap = Constant.zoomImage(bitmap, width, height);
-				BitmapDrawable bd=new BitmapDrawable(zoombitmap);
+				BitmapDrawable bd = new BitmapDrawable(zoombitmap);
 				img.setBackgroundDrawable(bd);
-	//			img.setImageBitmap(zoombitmap);
+				// img.setImageBitmap(zoombitmap);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
+
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		Log.i(TAG, "onResume ---------->");
 		mCurrentPage = mPre.getInt(Constant.CURRENT_THIRD_ACTIVITY_PAGE, 0);
 		mheadPicPath = mPre.getString(Constant.HEAD_PORTRAIT_PATH, "");
 		mPictureCoverPath = mPre.getString(Constant.PICTURE_COVER_PATH, "");
-		InitMyInfoPicture(head_portrait,mheadPicPath);
-	//	InitMyInfoPicture(mAccoutBg,mPictureCoverPath);
+		// InitMyInfoPicture(head_portrait, mheadPicPath);
+		// InitMyInfoPicture(mAccoutBg,mPictureCoverPath);
 		initNickNameAndBriefIntro();
 		initHighlight();
 	}
@@ -286,7 +295,7 @@ public class ThirdActivity extends LiveBaseActivity {
 		return path;
 	}
 
-	private Bitmap getPicBitmap(Uri uri,int width,int height) {
+	private Bitmap getPicBitmap(Uri uri, int width, int height) {
 		Bitmap bitmap, zoombitmap = null;
 		ContentResolver cr = this.getContentResolver();
 		try {
@@ -300,19 +309,19 @@ public class ThirdActivity extends LiveBaseActivity {
 		}
 		return zoombitmap;
 	}
-	
+
 	private void setCoverPicture(Uri uri) {
 		String path = getPicPath(uri);
 		if (!path.equals("") && (path.endsWith("jpg") || path.endsWith("png"))) {
 			Log.i(TAG, "head portrait path:" + path);
 			mPre.edit().putString(Constant.PICTURE_COVER_PATH, path).commit();
 			mPictureCoverPath = path;
-			int height,width;
+			int height, width;
 			height = mAccoutBg.getLayoutParams().height;
-			width  = mAccoutBg.getLayoutParams().width;
-			Bitmap bitmap = getPicBitmap(uri,width,height);
-			BitmapDrawable bd=new BitmapDrawable(bitmap);
-			
+			width = mAccoutBg.getLayoutParams().width;
+			Bitmap bitmap = getPicBitmap(uri, width, height);
+			BitmapDrawable bd = new BitmapDrawable(bitmap);
+
 			mAccoutBg.setBackgroundDrawable(bd);
 		}
 	}
@@ -325,7 +334,7 @@ public class ThirdActivity extends LiveBaseActivity {
 			mheadPicPath = path;
 			int width = head_portrait.getLayoutParams().width;
 			int height = head_portrait.getLayoutParams().height;
-			Bitmap bitmap = getPicBitmap(uri,width,height);
+			Bitmap bitmap = getPicBitmap(uri, width, height);
 			head_portrait.setImageBitmap(bitmap);
 		}
 	}
@@ -336,8 +345,8 @@ public class ThirdActivity extends LiveBaseActivity {
 		super.onBackPressed();
 	}
 
-	void headPortraitDialogShow(final Uri uri) {
-		ShowAlbumPicDialog mShowDialog = new ShowAlbumPicDialog(this, uri) {
+	void headPortraitDialogShow(final Bitmap mB) {
+		ShowAlbumPicDialog mShowDialog = new ShowAlbumPicDialog(this, mB) {
 			@Override
 			void onCancelClick() {
 				// TODO Auto-generated method stub
@@ -347,7 +356,7 @@ public class ThirdActivity extends LiveBaseActivity {
 			@Override
 			void onPassClick() {
 				// TODO Auto-generated method stub
-				setHeadPic(uri);
+		//		setHeadPic(uri);
 				this.dismiss();
 			}
 
@@ -355,8 +364,8 @@ public class ThirdActivity extends LiveBaseActivity {
 		mShowDialog.show();
 	}
 
-	void changeCoverDialogShow(final Uri uri) {
-		ShowAlbumPicDialog mShowDialog = new ShowAlbumPicDialog(this, uri) {
+	void changeCoverDialogShow(final Bitmap mB) {
+		ShowAlbumPicDialog mShowDialog = new ShowAlbumPicDialog(this, mB) {
 			@Override
 			void onCancelClick() {
 				// TODO Auto-generated method stub
@@ -366,53 +375,117 @@ public class ThirdActivity extends LiveBaseActivity {
 			@Override
 			void onPassClick() {
 				// TODO Auto-generated method stub
-				setCoverPicture(uri);
+		//		setCoverPicture(uri);
 				this.dismiss();
 			}
 
 		};
 		mShowDialog.show();
 	}
-	public void startPhotoZoom(Uri uri,int width,int height,int resultCode) {  
-        Intent intent = new Intent("com.android.camera.action.CROP");  
-        intent.setDataAndType(uri, "image/*");  
-        intent.putExtra("crop", "true");  
-        // aspectX aspectY 是宽高的比例  
-        intent.putExtra("aspectX", 1);  
-        intent.putExtra("aspectY", 1);  
-        // outputX outputY 是裁剪图片宽高  
-        intent.putExtra("outputX", width);  
-        intent.putExtra("outputY", height);  
-        intent.putExtra("return-data", true);  
-        startActivityForResult(intent, resultCode);  
-    }  
+
+	public void startPhotoZoom(Uri uri, int width, int height, int resultCode) {
+		Intent intent = new Intent("com.android.camera.action.CROP");
+		intent.setDataAndType(uri, "image/*");
+		intent.putExtra("crop", "true");
+		// aspectX aspectY 是宽高的比例
+		intent.putExtra("aspectX", width);
+		intent.putExtra("aspectY", height);
+		// outputX outputY 是裁剪图片宽高
+		intent.putExtra("outputX", width);
+		intent.putExtra("outputY", height);
+		intent.putExtra("return-data", true);
+		startActivityForResult(intent, resultCode);
+	}
+
+	private void SaveCropPicture(Bitmap photo, String filename) {
+		File myCaptureFile = new File(filename + ".png");
+		BufferedOutputStream bos;
+		try {
+			bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
+			photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
+			bos.flush();
+			bos.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	class PictureChangeTask extends AsyncTask<String, Boolean, Boolean> {
+		private ProgressDialog mProgressDialog;
+		private Bitmap mBitmap;
+		private int doAction;
+		private Uri uri;
+
+		public PictureChangeTask(Bitmap photo, int what) {
+			mBitmap = photo;
+			doAction = what;
+		}
+
+		@Override
+		protected Boolean doInBackground(String... params) {
+			//uri = Uri.parse(MediaStore.Images.Media.insertImage(
+			//		getContentResolver(), mBitmap, null, null));
+			return true;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			ProgressDialog dialog = new ProgressDialog(mContext);
+			dialog.setMessage("请稍候…");
+			dialog.setIndeterminate(true);
+			dialog.setCancelable(true);
+			mProgressDialog = dialog;
+			mProgressDialog.show();
+		}
+
+		@Override
+		protected void onPostExecute(Boolean flag) {
+			mProgressDialog.dismiss();
+			if (doAction == 1) {
+				changeCoverDialogShow(mBitmap);
+			} else if (doAction == 2) {
+				headPortraitDialogShow(mBitmap);
+			}
+		}
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		int width,height;
+		int width, height;
+		Log.i(TAG, "onActivityResult--------->");
 		if (data == null)
 			return;
 		final Uri uri = data.getData();
-		if (requestCode == 1) {
-			headPortraitDialogShow(uri);
-			// showPicDialog();
-		} else if (requestCode == 2) {
-			//changeCoverDialogShow(uri);
-			startPhotoZoom(uri);  
-		}else if(requestCode == Constant.RESULT_PICTURE_COVER){
-			 Bundle extras = data.getExtras();  
-	            if (extras != null) {  
-	                Bitmap photo = extras.getParcelable("data");  
-	                ByteArrayOutputStream stream = new ByteArrayOutputStream();  
-	                photo.compress(Bitmap.CompressFormat.JPEG, 75, stream);// (0 - 100)压缩文件  
-	                BitmapDrawable bd=new BitmapDrawable(photo);
-	                mAccoutBg.setBackgroundDrawable(bd);  
-	            }  
-		}else if(requestCode == Constant.PICTURE_COVER_CAPTUIE){
-			width = mAccoutBg.getLayoutParams().width;
-			height = mAccoutBg.getLayoutParams().height;
-			startPhotoZoom(uri,width,height,Constant.RESULT_PICTURE_COVER);
+		if (requestCode == Constant.RESULT_PICTURE_COVER) {
+			Log.i(TAG, "requestCode = RESULT_PICTURE_COVER");
+			Bundle extras = data.getExtras();
+			if (extras != null) {
+				Bitmap photo = extras.getParcelable("data");
+				new PictureChangeTask(photo, 1).execute();
+			}
+		} else if (requestCode == Constant.PICTURE_COVER_CAPTUIE) {
+			width = getWindowManager().getDefaultDisplay().getWidth() / 2;
+			height = mAccoutBg.getLayoutParams().height / 2;
+			Log.i(TAG, "width:" + width + ",height:" + height);
+			startPhotoZoom(uri, width, height, Constant.RESULT_PICTURE_COVER);
+		} else if (requestCode == Constant.PICTURE_HEAD_CAPTUIE) {
+			width = head_portrait.getLayoutParams().width;
+			height = head_portrait.getLayoutParams().height;
+			Log.i(TAG, "width:" + width + ",height:" + height);
+			startPhotoZoom(uri, width, height, Constant.RESULT_PACTURE_HEAD);
+		} else if (requestCode == Constant.RESULT_PACTURE_HEAD) {
+			Bundle extras = data.getExtras();
+			if (extras != null) {
+				Bitmap photo = extras.getParcelable("data");
+				new PictureChangeTask(photo, 2).execute();
+			}
 		}
 	}
 

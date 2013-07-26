@@ -114,9 +114,11 @@ public class Constant {
 	public static final String[] MY_INFO_FEATURE = { "ID", "nick_name",
 			"gender", "area", "tel", "email", "brief_intro"
 	};
-	public static int HEAD_PIC_CAPTURE = 1;
-	public static int PICTURE_COVER_CAPTUIE  = 2;
-	public static int RESULT_PICTURE_COVER = 3;
+	public static final int HEAD_PIC_CAPTURE = 1;
+	public static final int PICTURE_COVER_CAPTUIE  = 2;
+	public static final int RESULT_PICTURE_COVER = 3;
+	public static final int PICTURE_HEAD_CAPTUIE = 4;
+	public static final int RESULT_PACTURE_HEAD = 5;
 	
 	
 	public static Bitmap zoomImage(Bitmap bgimage, double newWidth,

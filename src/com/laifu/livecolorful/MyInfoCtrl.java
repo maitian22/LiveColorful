@@ -95,10 +95,14 @@ public class MyInfoCtrl implements Button.OnClickListener {
 			}
 
 		} else if (v == updateheadPic) {
-			Intent intent = new Intent();
+			/*Intent intent = new Intent();
 			intent.setType("image/*");
 			intent.setAction(Intent.ACTION_GET_CONTENT);
-			mActivity.startActivityForResult(intent, 1);
+			mActivity.startActivityForResult(intent, 1);*/
+			
+			Intent intent = new Intent(Intent.ACTION_PICK, null);  
+            intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");  
+            mActivity.startActivityForResult(intent, Constant.PICTURE_HEAD_CAPTUIE);  
 			
 		} else if (v == modifyCover) {
 		//	Intent intent = new Intent();
@@ -109,11 +113,11 @@ public class MyInfoCtrl implements Button.OnClickListener {
             intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");  
             mActivity.startActivityForResult(intent, Constant.PICTURE_COVER_CAPTUIE);  
 		}
-		for (i = 0; i < mEditArray.size(); i++) {
+		/*for (i = 0; i < mEditArray.size(); i++) {
 			if (v.getId() == mEditArray.get(i).getId()) {
 
 				break;
 			}
-		}
+		}*/
 	}
 }
