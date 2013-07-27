@@ -38,7 +38,6 @@ public class MyInfoCtrl implements Button.OnClickListener {
 		modifyCover.setOnClickListener(this);
 
 		for (int i = 0; i < mEditNameId.length; i++) {
-			// mTextArray.add((TextView) mRel.findViewById(mTextNameId[i]));
 			EditText mEdit = (EditText) mRel.findViewById(mEditNameId[i]);
 			String disText = mActivity.mPre.getString(
 					Constant.MY_INFO_FEATURE[i], "");
@@ -94,30 +93,15 @@ public class MyInfoCtrl implements Button.OnClickListener {
 				editInfo.setText(R.string.finish);
 			}
 
-		} else if (v == updateheadPic) {
-			/*Intent intent = new Intent();
-			intent.setType("image/*");
-			intent.setAction(Intent.ACTION_GET_CONTENT);
-			mActivity.startActivityForResult(intent, 1);*/
-			
+		} else if (v == updateheadPic) {	
 			Intent intent = new Intent(Intent.ACTION_PICK, null);  
             intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");  
             mActivity.startActivityForResult(intent, Constant.PICTURE_HEAD_CAPTUIE);  
 			
 		} else if (v == modifyCover) {
-		//	Intent intent = new Intent();
-		//	intent.setType("image/*");
-		//	intent.setAction(Intent.ACTION_GET_CONTENT);
-		//	mActivity.startActivityForResult(intent,2);
 			Intent intent = new Intent(Intent.ACTION_PICK, null);  
             intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");  
             mActivity.startActivityForResult(intent, Constant.PICTURE_COVER_CAPTUIE);  
 		}
-		/*for (i = 0; i < mEditArray.size(); i++) {
-			if (v.getId() == mEditArray.get(i).getId()) {
-
-				break;
-			}
-		}*/
 	}
 }

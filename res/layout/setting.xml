@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:text="设置"
+        android:textSize="25dp" />
+
+    <ImageView
+        android:id="@+id/close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/gb_btn" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/close"
+        android:background="@color/grey" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/white"
+            android:layout_margin="5dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_setting_text_margin"
+                android:textSize="@dimen/activity_setting_text_size"
+                android:text="通知提醒" />
+
+            <ImageView
+                android:id="@+id/notification_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="20dp"
+                android:background="@drawable/ic_checkbox_checked1" />
+            <LinearLayout
+                android:id="@+id/mline"
+                android:layout_below="@id/notification_switch"
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:background="@color/grey"
+                />
+            <TextView 
+                android:layout_below="@id/mline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_setting_text_margin"
+                android:textSize="@dimen/activity_setting_text_size"
+                android:text="闹钟声音提醒"
+                />
+            <ImageView
+                android:id="@+id/clock_switch"
+                android:layout_below="@id/mline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_setting_text_margin"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/ic_checkbox_unchecked1" 
+                /> 
+            <LinearLayout
+                android:id="@+id/mline1"
+                android:layout_below="@id/clock_switch"
+                android:layout_width="fill_parent"
+                android:layout_height="8dp"
+                android:background="@color/grey"/>
+            
+            <TextView 
+                android:layout_below="@id/mline1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_setting_text_margin"
+                android:textSize="@dimen/activity_setting_text_size"
+                android:text="修改密码"/>
+            <ImageView
+                android:layout_below="@id/mline1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_setting_text_margin"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/arraw" 
+                /> 
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

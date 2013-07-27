@@ -1,7 +1,5 @@
 package com.laifu.livecolorful;
 
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -23,11 +21,13 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -183,6 +183,7 @@ public class ThirdActivity extends LiveBaseActivity {
 	}
 
 	private void initView() {
+		Log.i(TAG,"initView ------------->");
 		mPre = PreferenceManager.getDefaultSharedPreferences(this);
 		my_rount_linear = (LinearLayout) findViewById(R.id.my_rount_linear);
 		my_rount_linear.setOnClickListener(mylinearListner);
@@ -213,9 +214,21 @@ public class ThirdActivity extends LiveBaseActivity {
 		mNickName = (TextView) findViewById(R.id.nick_name_disp);
 		mBriefIntro = (TextView) findViewById(R.id.brief_intro_disp);
 	}
-
+	
+	Button.OnClickListener settinglistener = new Button.OnClickListener(){
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			Intent i = new Intent();
+			i.setClass(mContext, SettingActivity.class);
+			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			mContext.startActivity(i);
+			
+		}
+	};
 	public void initTitle() {
 		left.setBackgroundResource(R.drawable.sz_btn);
+		left.setOnClickListener(settinglistener);
 		title.setText("我的账号");
 		right.setVisibility(View.GONE);
 	}
@@ -274,11 +287,37 @@ public class ThirdActivity extends LiveBaseActivity {
 		initNickNameAndBriefIntro();
 		initHighlight();
 	}
-
+	
+	void InitMyInfoPicture(){
+		Uri headPic = Uri.parse("file://" + "/sdcard/LiveColorful/Photo/headPic.png");
+		try {
+			Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver()
+					.openInputStream(headPic));
+			head_portrait.setImageBitmap(bitmap);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Uri CoverPic = Uri.parse("file://" + "/sdcard/LiveColorful/Photo/CoverPic.png");
+		try {
+			Bitmap Coverbitmap = BitmapFactory.decodeStream(getContentResolver()
+					.openInputStream(CoverPic));
+			BitmapDrawable bd=new BitmapDrawable(Coverbitmap);
+			mAccoutBg.setBackgroundDrawable(bd);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mContext = this;
+		
+		Log.i(TAG,"onCreate --------->");
+		InitMyInfoPicture();
 		// setContentView(R.layout.activity_my_account);
 	}
 
@@ -310,35 +349,6 @@ public class ThirdActivity extends LiveBaseActivity {
 		return zoombitmap;
 	}
 
-	private void setCoverPicture(Uri uri) {
-		String path = getPicPath(uri);
-		if (!path.equals("") && (path.endsWith("jpg") || path.endsWith("png"))) {
-			Log.i(TAG, "head portrait path:" + path);
-			mPre.edit().putString(Constant.PICTURE_COVER_PATH, path).commit();
-			mPictureCoverPath = path;
-			int height, width;
-			height = mAccoutBg.getLayoutParams().height;
-			width = mAccoutBg.getLayoutParams().width;
-			Bitmap bitmap = getPicBitmap(uri, width, height);
-			BitmapDrawable bd = new BitmapDrawable(bitmap);
-
-			mAccoutBg.setBackgroundDrawable(bd);
-		}
-	}
-
-	private void setHeadPic(Uri uri) {
-		String path = getPicPath(uri);
-		if (!path.equals("") && (path.endsWith("jpg") || path.endsWith("png"))) {
-			Log.i(TAG, "head portrait path:" + path);
-			mPre.edit().putString(Constant.HEAD_PORTRAIT_PATH, path).commit();
-			mheadPicPath = path;
-			int width = head_portrait.getLayoutParams().width;
-			int height = head_portrait.getLayoutParams().height;
-			Bitmap bitmap = getPicBitmap(uri, width, height);
-			head_portrait.setImageBitmap(bitmap);
-		}
-	}
-
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
@@ -356,12 +366,42 @@ public class ThirdActivity extends LiveBaseActivity {
 			@Override
 			void onPassClick() {
 				// TODO Auto-generated method stub
-		//		setHeadPic(uri);
+				// setHeadPic(uri);
+				SaveBitmapToDisk(mB, "headPic");
+				head_portrait.setImageBitmap(mB);
 				this.dismiss();
+
 			}
 
 		};
 		mShowDialog.show();
+	}
+
+	void SaveBitmapToDisk(Bitmap mBitmap, String name) {
+		String sdcardPath = Environment.getExternalStorageDirectory().getPath();
+		String dirctory = sdcardPath+"/LiveColorful/Photo";
+		File f = new File(dirctory);
+			if(!f.exists()){
+			f.mkdirs();
+		}
+		String filePath = dirctory+"/"+name;
+		f = new File(filePath+ ".png");
+
+		try {
+			f.createNewFile();
+			FileOutputStream fOut = null;
+			fOut = new FileOutputStream(f);
+			mBitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+			fOut.flush();
+			fOut.close();
+		} catch (FileNotFoundException e) {
+			Log.i(TAG,"SaveBitmapToDisk FileNotFoundException----------->");
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			Log.i(TAG,"SaveBitmapToDisk IOException----------->");
+		}
 	}
 
 	void changeCoverDialogShow(final Bitmap mB) {
@@ -375,7 +415,10 @@ public class ThirdActivity extends LiveBaseActivity {
 			@Override
 			void onPassClick() {
 				// TODO Auto-generated method stub
-		//		setCoverPicture(uri);
+				// setCoverPicture(uri);
+				SaveBitmapToDisk(mB, "CoverPic");
+				BitmapDrawable bd=new BitmapDrawable(mB);
+				mAccoutBg.setBackgroundDrawable(bd);
 				this.dismiss();
 			}
 
@@ -397,26 +440,7 @@ public class ThirdActivity extends LiveBaseActivity {
 		startActivityForResult(intent, resultCode);
 	}
 
-	private void SaveCropPicture(Bitmap photo, String filename) {
-		File myCaptureFile = new File(filename + ".png");
-		BufferedOutputStream bos;
-		try {
-			bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
-			photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
-			bos.flush();
-			bos.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
 	class PictureChangeTask extends AsyncTask<String, Boolean, Boolean> {
-		private ProgressDialog mProgressDialog;
 		private Bitmap mBitmap;
 		private int doAction;
 		private Uri uri;
@@ -428,24 +452,19 @@ public class ThirdActivity extends LiveBaseActivity {
 
 		@Override
 		protected Boolean doInBackground(String... params) {
-			//uri = Uri.parse(MediaStore.Images.Media.insertImage(
-			//		getContentResolver(), mBitmap, null, null));
+			// uri = Uri.parse(MediaStore.Images.Media.insertImage(
+			// getContentResolver(), mBitmap, null, null));
 			return true;
 		}
 
 		@Override
 		protected void onPreExecute() {
-			ProgressDialog dialog = new ProgressDialog(mContext);
-			dialog.setMessage("请稍候…");
-			dialog.setIndeterminate(true);
-			dialog.setCancelable(true);
-			mProgressDialog = dialog;
-			mProgressDialog.show();
+			showProgressDialog();
 		}
 
 		@Override
 		protected void onPostExecute(Boolean flag) {
-			mProgressDialog.dismiss();
+			cancelProgressDialog();
 			if (doAction == 1) {
 				changeCoverDialogShow(mBitmap);
 			} else if (doAction == 2) {
