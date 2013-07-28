@@ -36,11 +36,11 @@ public class MyInfoCtrl implements Button.OnClickListener {
 		editInfo.setOnClickListener(this);
 		updateheadPic.setOnClickListener(this);
 		modifyCover.setOnClickListener(this);
-
+		
+		String[] mAccount = GlobaleData.getCurrentAccountMsg(mActivity);
 		for (int i = 0; i < mEditNameId.length; i++) {
 			EditText mEdit = (EditText) mRel.findViewById(mEditNameId[i]);
-			String disText = mActivity.mPre.getString(
-					Constant.MY_INFO_FEATURE[i], "");
+			String disText = mAccount[i];
 			mEdit.setText(disText);
 			mEdit.setCursorVisible(false);
 			mEdit.setClickable(false);
@@ -50,13 +50,11 @@ public class MyInfoCtrl implements Button.OnClickListener {
 	}
 
 	private void saveEditInfomation() {
+		String[] mContent= new String[7];
 		for (int i = 0; i < mEditArray.size(); i++) {
-			mActivity.mPre
-					.edit()
-					.putString(Constant.MY_INFO_FEATURE[i],
-							mEditArray.get(i).getEditableText().toString())
-					.commit();
+			mContent[i] = mEditArray.get(i).getEditableText().toString();
 		}
+		GlobaleData.SaveCurrentAccountMsg(mActivity, mContent);
 		mActivity.initNickNameAndBriefIntro();
 	}
 	private void hideSoftKeypad(){

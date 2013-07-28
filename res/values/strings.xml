@@ -8,4 +8,11 @@
     <string name="edit_info">编辑资料</string>
     <string name="upload_head_pic">上传头像</string>
     <string name="change_cover">修改封面</string>
+    <string name="pull_to_refresh_pull_label">下拉刷新&#8230;</string>
+    <string name="pull_to_refresh_release_label">松开刷新&#8230;</string>
+    <string name="pull_to_refresh_refreshing_label">正在刷新&#8230;</string>
+    <string name="pull_to_refresh_tap_label">点击刷新&#8230;</string>
+    <string name="last_update">最新更新</string> 
+    <string name="obtain_more">获取更多</string>
+    <string name="security_code_hint">秒之内未收到验证码，请重新验证</string>
 </resources>

@@ -44,7 +44,7 @@ public abstract class ShowAlbumPicDialog extends Dialog implements
 		int height = width*mBitmap.getHeight()/mBitmap.getWidth();
 		mShowPic.setScaleType(ScaleType.CENTER_CROP);
 		mShowPic.setImageBitmap(mBitmap);
-		mShowPic.setImageBitmap(Constant.zoomImage(mBitmap, width, height));
+		mShowPic.setImageBitmap(GlobaleData.zoomImage(mBitmap, width, height));
 		
 		/*Bitmap bitmap = null;
 		try {

@@ -4,17 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -23,7 +16,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -75,7 +67,6 @@ public class ThirdActivity extends LiveBaseActivity {
 	private RelativeLayout my_rount, my_attation, my_fans, my_info;
 	private Context mContext;
 	private MyInfoCtrl mMyInfoCtrl;
-	private String mheadPicPath = "", mPictureCoverPath = "";
 	private ImageView head_portrait;
 	private TextView mNickName, mBriefIntro;
 	private RelativeLayout mAccoutBg;
@@ -133,49 +124,8 @@ public class ThirdActivity extends LiveBaseActivity {
 		}
 	}
 
-	private List<Map<String, Object>> getData() {
-		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
-		map.put("info", "23580266个成员     67556个行程");
-		map.put("img", R.drawable.progressbar);
-		list.add(map);
-
-		map = new HashMap<String, Object>();
-		map.put("title", "建筑系12级3班 同路人");
-		map.put("info", "52个成员     47个行程");
-		map.put("img", R.drawable.progressbar);
-		list.add(map);
-
-		map = new HashMap<String, Object>();
-		map.put("title", "G3");
-		map.put("info", "google 3");
-		map.put("img", R.drawable.progressbar);
-		list.add(map);
-
-		map = new HashMap<String, Object>();
-		map.put("title", "G3");
-		map.put("info", "google 3");
-		map.put("img", R.drawable.progressbar);
-		list.add(map);
-
-		map = new HashMap<String, Object>();
-		map.put("title", "G3");
-		map.put("info", "google 3");
-		map.put("img", R.drawable.progressbar);
-		list.add(map);
-
-		map = new HashMap<String, Object>();
-		map.put("title", "G3");
-		map.put("info", "google 3");
-		map.put("img", R.drawable.progressbar);
-		list.add(map);
-		return list;
-	}
-
 	private void InitRountListView() {
-		SimpleAdapter adapter = new SimpleAdapter(this, getData(),
+		SimpleAdapter adapter = new SimpleAdapter(this, GlobaleData.getMyRouontListData(),
 				R.layout.my_rount_list,
 				new String[] { "title", "info", "img" }, new int[] {
 						R.id.title, R.id.info, R.id.img });
@@ -233,24 +183,9 @@ public class ThirdActivity extends LiveBaseActivity {
 		right.setVisibility(View.GONE);
 	}
 
-	private void InitHeadPortraitImage(Uri uri) {
-		Bitmap bitmap, zoombitmap;
-		try {
-			bitmap = BitmapFactory.decodeStream(getContentResolver()
-					.openInputStream(uri));
-			zoombitmap = Constant.zoomImage(bitmap, 132, 132);
-			head_portrait.setImageBitmap(zoombitmap);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 	public void initNickNameAndBriefIntro() {
-		mNickName.setText(mPre.getString(Constant.MY_INFO_FEATURE[1],
-				Constant.DEFAULT_NICK_NAME));
-		mBriefIntro.setText(mPre.getString(Constant.MY_INFO_FEATURE[6],
-				Constant.DEFAULT_BRIEF_INTRO));
+		mNickName.setText(GlobaleData.getCurrentAccountMsg(this)[1]);
+		mBriefIntro.setText(GlobaleData.getCurrentAccountMsg(this)[6]);
 	}
 
 	void InitMyInfoPicture(View img, String path) {
@@ -263,10 +198,9 @@ public class ThirdActivity extends LiveBaseActivity {
 			try {
 				bitmap = BitmapFactory.decodeStream(getContentResolver()
 						.openInputStream(uri));
-				zoombitmap = Constant.zoomImage(bitmap, width, height);
+				zoombitmap = GlobaleData.zoomImage(bitmap, width, height);
 				BitmapDrawable bd = new BitmapDrawable(zoombitmap);
 				img.setBackgroundDrawable(bd);
-				// img.setImageBitmap(zoombitmap);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -280,36 +214,17 @@ public class ThirdActivity extends LiveBaseActivity {
 		super.onResume();
 		Log.i(TAG, "onResume ---------->");
 		mCurrentPage = mPre.getInt(Constant.CURRENT_THIRD_ACTIVITY_PAGE, 0);
-		mheadPicPath = mPre.getString(Constant.HEAD_PORTRAIT_PATH, "");
-		mPictureCoverPath = mPre.getString(Constant.PICTURE_COVER_PATH, "");
-		// InitMyInfoPicture(head_portrait, mheadPicPath);
-		// InitMyInfoPicture(mAccoutBg,mPictureCoverPath);
 		initNickNameAndBriefIntro();
 		initHighlight();
 	}
 	
 	void InitMyInfoPicture(){
-		Uri headPic = Uri.parse("file://" + "/sdcard/LiveColorful/Photo/headPic.png");
-		try {
-			Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver()
-					.openInputStream(headPic));
-			head_portrait.setImageBitmap(bitmap);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Bitmap mBitmapHead = GlobaleData.getMyheadPicture(this);
+		head_portrait.setImageBitmap(mBitmapHead);
 		
-		Uri CoverPic = Uri.parse("file://" + "/sdcard/LiveColorful/Photo/CoverPic.png");
-		try {
-			Bitmap Coverbitmap = BitmapFactory.decodeStream(getContentResolver()
-					.openInputStream(CoverPic));
-			BitmapDrawable bd=new BitmapDrawable(Coverbitmap);
-			mAccoutBg.setBackgroundDrawable(bd);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		Bitmap mBitmapCover = GlobaleData.getMyCoverPicture(this);
+		BitmapDrawable bd=new BitmapDrawable(mBitmapCover);
+		mAccoutBg.setBackgroundDrawable(bd);
 	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -318,35 +233,6 @@ public class ThirdActivity extends LiveBaseActivity {
 		
 		Log.i(TAG,"onCreate --------->");
 		InitMyInfoPicture();
-		// setContentView(R.layout.activity_my_account);
-	}
-
-	private String getPicPath(Uri uri) {
-		String path = "";
-		String[] pojo = { MediaStore.Images.Media.DATA };
-		Cursor cursor = managedQuery(uri, pojo, null, null, null);
-		if (cursor != null) {
-			int colunm_index = cursor
-					.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-			cursor.moveToFirst();
-			path = cursor.getString(colunm_index);
-		}
-		return path;
-	}
-
-	private Bitmap getPicBitmap(Uri uri, int width, int height) {
-		Bitmap bitmap, zoombitmap = null;
-		ContentResolver cr = this.getContentResolver();
-		try {
-			bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
-			Log.i(TAG, "mPortrait width:" + head_portrait.getWidth()
-					+ "mPortrait height:" + head_portrait.getHeight());
-			zoombitmap = Constant.zoomImage(bitmap, width, height);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return zoombitmap;
 	}
 
 	@Override
@@ -443,7 +329,6 @@ public class ThirdActivity extends LiveBaseActivity {
 	class PictureChangeTask extends AsyncTask<String, Boolean, Boolean> {
 		private Bitmap mBitmap;
 		private int doAction;
-		private Uri uri;
 
 		public PictureChangeTask(Bitmap photo, int what) {
 			mBitmap = photo;
@@ -452,8 +337,6 @@ public class ThirdActivity extends LiveBaseActivity {
 
 		@Override
 		protected Boolean doInBackground(String... params) {
-			// uri = Uri.parse(MediaStore.Images.Media.insertImage(
-			// getContentResolver(), mBitmap, null, null));
 			return true;
 		}
 
