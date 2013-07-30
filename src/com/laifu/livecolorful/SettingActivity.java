@@ -1,5 +1,7 @@
 package com.laifu.livecolorful;
 
+import java.util.Map;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,6 +29,18 @@ public class SettingActivity extends Activity implements ImageView.OnClickListen
 		mLeftBtn.setVisibility(android.view.View.INVISIBLE);
 	}
 	
+	private void InitBoundButtonAndImg(){
+		Map<String, Object> map = GlobaleData.getCurrentBountAccount();
+		boolean IsPhoneBound = Boolean
+				.parseBoolean(map.get("phone").toString());
+		boolean IsSinaBound = Boolean.parseBoolean(map.get("sina").toString());
+		boolean IsQQBound = Boolean.parseBoolean(map.get("qq").toString());
+		
+		BoundPhoneBtn = (Button)findViewById(R.id.bound_phone_btn);
+		BoundPhoneBtn.setBackgroundResource(IsPhoneBound?R.drawable.shape_button_blue:R.drawable.shape_button_grey);
+		BoundPhoneBtn.setOnClickListener(this);
+		
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -42,8 +56,7 @@ public class SettingActivity extends Activity implements ImageView.OnClickListen
 		mChangePassword = (RelativeLayout)findViewById(R.id.change_password);
 		mChangePassword.setOnClickListener(this);
 		
-		BoundPhoneBtn = (Button)findViewById(R.id.bound_phone_btn);
-		BoundPhoneBtn.setOnClickListener(this);
+		InitBoundButtonAndImg();
 	}
 	private void StartTheChooseActivity(Class<?> mActivity){
 		Intent i = new Intent(this,mActivity);

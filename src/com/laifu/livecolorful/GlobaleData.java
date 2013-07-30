@@ -124,6 +124,28 @@ public class GlobaleData {
 				(int) height, matrix, true);
 		return bitmap;
 	}
-
+	/*获取当前行程单个数*/
+	public static int getCurrentRountListNumber(){
+		return 29;
+	}
+	/*获取当前关注人数*/
+	public static int getCurrentAttationNumber(){
+		return 168;
+	}
+	/*获取当前粉丝人数*/
+	public static int getCurrentFanNumber(){
+		return 200;
+	}
+	/*获取当前绑定帐号*/
+	public static Map<String, Object> getCurrentBountAccount(){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("phone", false);
+		map.put("sina", true);
+		map.put("qq", false);
+		
+		return map;
+		//return 0;
+	}
 	/************************我的帐号******************************/
 }

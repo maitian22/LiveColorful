@@ -23,7 +23,7 @@
 	        android:layout_marginLeft="20dp"
 	        android:layout_marginTop="8dp"
 	        android:gravity="center_vertical"
-	        android:background="@drawable/shape_showpic_dialog"
+	        android:background="@drawable/shape_button_grey"
 	        android:textSize="20dp"
 	        android:textColor="@color/white"
 	        android:text="取消"
@@ -45,7 +45,7 @@
 	        android:layout_marginTop="8dp"
 	        android:textSize="20dp"
 	        android:textColor="@color/white"
-	        android:background="@drawable/shape_showpic_dialog_blue"
+	        android:background="@drawable/shape_button_blue"
 	        android:text="通过"
 	        />
 	</RelativeLayout>

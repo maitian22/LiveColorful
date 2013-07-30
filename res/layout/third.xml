@@ -91,6 +91,7 @@
                         android:orientation="vertical" >
 
                         <TextView
+                            android:id="@+id/rount_list_number"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
@@ -122,6 +123,7 @@
                         android:orientation="vertical" >
 
                         <TextView
+                            android:id="@+id/attation_number"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
@@ -154,6 +156,7 @@
                         android:orientation="vertical" >
 
                         <TextView
+                            android:id="@+id/fans_number"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"

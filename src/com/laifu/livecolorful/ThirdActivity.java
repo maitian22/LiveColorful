@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Map;
 
 import android.content.Context;
 import android.content.Intent;
@@ -70,6 +71,8 @@ public class ThirdActivity extends LiveBaseActivity {
 	private ImageView head_portrait;
 	private TextView mNickName, mBriefIntro;
 	private RelativeLayout mAccoutBg;
+	private TextView mRountListNum, mAttationNum, mFansNum;
+	private ImageView mBoundPhoneImg, mBoundSinaImg, mBoundQQImg;
 
 	private OnClickListener mylinearListner = new LinearLayout.OnClickListener() {
 		@Override
@@ -125,15 +128,15 @@ public class ThirdActivity extends LiveBaseActivity {
 	}
 
 	private void InitRountListView() {
-		SimpleAdapter adapter = new SimpleAdapter(this, GlobaleData.getMyRouontListData(),
-				R.layout.my_rount_list,
+		SimpleAdapter adapter = new SimpleAdapter(this,
+				GlobaleData.getMyRouontListData(), R.layout.my_rount_list,
 				new String[] { "title", "info", "img" }, new int[] {
 						R.id.title, R.id.info, R.id.img });
 		my_rount_list.setAdapter(adapter);
 	}
 
 	private void initView() {
-		Log.i(TAG,"initView ------------->");
+		Log.i(TAG, "initView ------------->");
 		mPre = PreferenceManager.getDefaultSharedPreferences(this);
 		my_rount_linear = (LinearLayout) findViewById(R.id.my_rount_linear);
 		my_rount_linear.setOnClickListener(mylinearListner);
@@ -164,8 +167,8 @@ public class ThirdActivity extends LiveBaseActivity {
 		mNickName = (TextView) findViewById(R.id.nick_name_disp);
 		mBriefIntro = (TextView) findViewById(R.id.brief_intro_disp);
 	}
-	
-	Button.OnClickListener settinglistener = new Button.OnClickListener(){
+
+	Button.OnClickListener settinglistener = new Button.OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
@@ -173,9 +176,10 @@ public class ThirdActivity extends LiveBaseActivity {
 			i.setClass(mContext, SettingActivity.class);
 			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			mContext.startActivity(i);
-			
+
 		}
 	};
+
 	public void initTitle() {
 		left.setBackgroundResource(R.drawable.sz_btn);
 		left.setOnClickListener(settinglistener);
@@ -217,22 +221,56 @@ public class ThirdActivity extends LiveBaseActivity {
 		initNickNameAndBriefIntro();
 		initHighlight();
 	}
-	
-	void InitMyInfoPicture(){
+
+	void InitMyInfoPicture() {
 		Bitmap mBitmapHead = GlobaleData.getMyheadPicture(this);
 		head_portrait.setImageBitmap(mBitmapHead);
-		
+
 		Bitmap mBitmapCover = GlobaleData.getMyCoverPicture(this);
-		BitmapDrawable bd=new BitmapDrawable(mBitmapCover);
+		BitmapDrawable bd = new BitmapDrawable(mBitmapCover);
 		mAccoutBg.setBackgroundDrawable(bd);
 	}
+
+	void InitCountNumbers() {
+		mRountListNum = (TextView) findViewById(R.id.rount_list_number);
+		mRountListNum.setText("" + GlobaleData.getCurrentRountListNumber());
+
+		mAttationNum = (TextView) findViewById(R.id.attation_number);
+		mAttationNum.setText("" + GlobaleData.getCurrentAttationNumber());
+
+		mFansNum = (TextView) findViewById(R.id.fans_number);
+		mFansNum.setText("" + GlobaleData.getCurrentFanNumber());
+	}
+
+	public void InitBoundAccount() {
+		Map<String, Object> map = GlobaleData.getCurrentBountAccount();
+		boolean IsPhoneBound = Boolean
+				.parseBoolean(map.get("phone").toString());
+		boolean IsSinaBound = Boolean.parseBoolean(map.get("sina").toString());
+		boolean IsQQBound = Boolean.parseBoolean(map.get("qq").toString());
+
+		mBoundPhoneImg = (ImageView) findViewById(R.id.mPhone);
+		mBoundPhoneImg
+				.setBackgroundResource(IsPhoneBound ? R.drawable.iphone_on_btn
+						: R.drawable.iphone_0ff_btn);
+		mBoundSinaImg = (ImageView) findViewById(R.id.sina);
+		mBoundSinaImg
+				.setBackgroundResource(IsSinaBound ? R.drawable.sina_on_btn
+						: R.drawable.sina_off_btn);
+		mBoundQQImg = (ImageView) findViewById(R.id.qq);
+		mBoundQQImg.setBackgroundResource(IsQQBound ? R.drawable.qq_on_btn
+				: R.drawable.qq_off_btn);
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mContext = this;
-		
-		Log.i(TAG,"onCreate --------->");
+
+		Log.i(TAG, "onCreate --------->");
 		InitMyInfoPicture();
+		InitCountNumbers();
+		InitBoundAccount();
 	}
 
 	@Override
@@ -265,13 +303,13 @@ public class ThirdActivity extends LiveBaseActivity {
 
 	void SaveBitmapToDisk(Bitmap mBitmap, String name) {
 		String sdcardPath = Environment.getExternalStorageDirectory().getPath();
-		String dirctory = sdcardPath+"/LiveColorful/Photo";
+		String dirctory = sdcardPath + "/LiveColorful/Photo";
 		File f = new File(dirctory);
-			if(!f.exists()){
+		if (!f.exists()) {
 			f.mkdirs();
 		}
-		String filePath = dirctory+"/"+name;
-		f = new File(filePath+ ".png");
+		String filePath = dirctory + "/" + name;
+		f = new File(filePath + ".png");
 
 		try {
 			f.createNewFile();
@@ -281,12 +319,12 @@ public class ThirdActivity extends LiveBaseActivity {
 			fOut.flush();
 			fOut.close();
 		} catch (FileNotFoundException e) {
-			Log.i(TAG,"SaveBitmapToDisk FileNotFoundException----------->");
+			Log.i(TAG, "SaveBitmapToDisk FileNotFoundException----------->");
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			Log.i(TAG,"SaveBitmapToDisk IOException----------->");
+			Log.i(TAG, "SaveBitmapToDisk IOException----------->");
 		}
 	}
 
@@ -303,7 +341,7 @@ public class ThirdActivity extends LiveBaseActivity {
 				// TODO Auto-generated method stub
 				// setCoverPicture(uri);
 				SaveBitmapToDisk(mB, "CoverPic");
-				BitmapDrawable bd=new BitmapDrawable(mB);
+				BitmapDrawable bd = new BitmapDrawable(mB);
 				mAccoutBg.setBackgroundDrawable(bd);
 				this.dismiss();
 			}

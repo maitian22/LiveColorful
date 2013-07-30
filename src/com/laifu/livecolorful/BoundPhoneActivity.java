@@ -138,7 +138,7 @@ public class BoundPhoneActivity extends Activity implements TextWatcher,
 				R.color.button_grey));
 		
 		mTitleText.setText("验证手机");
-		mTitleLeft.setBackgroundResource(R.drawable.shape_button);
+		mTitleLeft.setBackgroundResource(R.drawable.shape_button_white);
 		mTitleLeft.setText("重新验证");
 		mTitleLeft.setVisibility(android.view.View.VISIBLE);
 		mTitleLeft.setOnClickListener(this);

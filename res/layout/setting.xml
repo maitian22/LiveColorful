@@ -186,7 +186,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_margin="@dimen/activity_setting_text_margin"
-                        android:background="@drawable/shape_showpic_dialog_blue"
+                        android:background="@drawable/shape_button_blue"
                         android:text="绑定"
                         android:textColor="@color/white"
                         android:textSize="20dp" />
@@ -225,7 +225,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_margin="@dimen/activity_setting_text_margin"
-                        android:background="@drawable/shape_showpic_dialog"
+                        android:background="@drawable/shape_button_grey"
                         android:text="已绑定"
                         android:textColor="@color/white"
                         android:textSize="20dp" />
@@ -264,7 +264,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_margin="@dimen/activity_setting_text_margin"
-                        android:background="@drawable/shape_showpic_dialog_blue"
+                        android:background="@drawable/shape_button_blue"
                         android:text="绑定"
                         android:textColor="@color/white"
                         android:textSize="20dp" />
@@ -283,7 +283,7 @@
                         android:layout_marginBottom="10dp"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
-                        android:background="@drawable/shape_showpic_dialog"
+                        android:background="@drawable/shape_button_grey"
                         android:text="切换帐号"
                         android:textColor="@color/white"
                         android:textSize="20dp" />

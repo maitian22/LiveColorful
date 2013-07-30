@@ -18,8 +18,8 @@ public class ChangePasswordActivity extends Activity implements Button.OnClickLi
 		TitleLeft.setOnClickListener(this);
 		TitleRight.setOnClickListener(this);
 		
-		TitleLeft.setBackgroundResource(R.drawable.shape_button);
-		TitleRight.setBackgroundResource(R.drawable.shape_button);
+		TitleLeft.setBackgroundResource(R.drawable.shape_button_white);
+		TitleRight.setBackgroundResource(R.drawable.shape_button_white);
 	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

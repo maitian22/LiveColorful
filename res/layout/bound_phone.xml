@@ -63,7 +63,7 @@
         android:layout_marginTop="50dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:background="@drawable/shape_showpic_dialog"
+        android:background="@drawable/shape_button_grey"
         android:paddingBottom="15dp"
         android:paddingTop="15dp"
         android:text="获取验证码"
