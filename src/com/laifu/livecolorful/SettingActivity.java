@@ -17,7 +17,8 @@ public class SettingActivity extends Activity implements ImageView.OnClickListen
 	private Button mLeftBtn,mRightBtn;
 	private TextView mTitle;
 	private RelativeLayout mChangePassword;
-	private Button BoundPhoneBtn;
+	private Button BoundPhoneBtn,BoundSinaBtn,BoundQQBtn;
+	private ImageView mPhoneImg,mSinaImg,mQQImg;
 	private void InitTitle(){
 		mRightBtn = (Button)findViewById(R.id.right);
 		mRightBtn.setBackgroundResource(R.drawable.gb_btn);
@@ -29,6 +30,17 @@ public class SettingActivity extends Activity implements ImageView.OnClickListen
 		mLeftBtn.setVisibility(android.view.View.INVISIBLE);
 	}
 	
+	private void changeButtonStatus(Button mBtn,boolean isBound){
+			mBtn.setBackgroundResource(isBound?R.drawable.shape_button_grey:R.drawable.shape_button_blue);
+			mBtn.setText(isBound?R.string.already_bound:R.string.bound);
+			mBtn.setOnClickListener(this);
+			if(isBound){
+				mBtn.setClickable(false);
+			}else{
+				mBtn.setClickable(true);
+			}
+	}
+	
 	private void InitBoundButtonAndImg(){
 		Map<String, Object> map = GlobaleData.getCurrentBountAccount();
 		boolean IsPhoneBound = Boolean
@@ -37,9 +49,19 @@ public class SettingActivity extends Activity implements ImageView.OnClickListen
 		boolean IsQQBound = Boolean.parseBoolean(map.get("qq").toString());
 		
 		BoundPhoneBtn = (Button)findViewById(R.id.bound_phone_btn);
-		BoundPhoneBtn.setBackgroundResource(IsPhoneBound?R.drawable.shape_button_blue:R.drawable.shape_button_grey);
-		BoundPhoneBtn.setOnClickListener(this);
+		changeButtonStatus(BoundPhoneBtn,IsPhoneBound);
+		mPhoneImg = (ImageView)findViewById(R.id.phone_img);
+		mPhoneImg.setBackgroundResource(IsPhoneBound?R.drawable.iphone_on_btn:R.drawable.iphone_0ff_btn);
 		
+		BoundSinaBtn = (Button)findViewById(R.id.bound_sina_btn);
+		changeButtonStatus(BoundSinaBtn,IsSinaBound);
+		mSinaImg = (ImageView)findViewById(R.id.sina_img);
+		mSinaImg.setBackgroundResource(IsSinaBound?R.drawable.sina_on_btn:R.drawable.sina_off_btn);
+		
+		BoundQQBtn = (Button)findViewById(R.id.bound_qq_btn);
+		changeButtonStatus(BoundQQBtn,IsQQBound);
+		mQQImg = (ImageView)findViewById(R.id.qq_img);
+		mQQImg.setBackgroundResource(IsQQBound?R.drawable.qq_on_btn:R.drawable.qq_off_btn);
 	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,5 +99,4 @@ public class SettingActivity extends Activity implements ImageView.OnClickListen
 			StartTheChooseActivity(BoundPhoneActivity.class);
 		}
 	}
-
 }

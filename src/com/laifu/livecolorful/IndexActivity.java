@@ -1,12 +1,22 @@
 package com.laifu.livecolorful;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.SlidingDrawer;
 
+import com.laifu.livecolorful.adapter.IndexLaifuAdapter;
+import com.laifu.livecolorful.adapter.IndexMyDiaryAdapter;
+import com.laifu.livecolorful.adapter.IndexXingchengdanAdapter;
+import com.laifu.livecolorful.tool.DensityUtil;
+import com.laifu.livecolorful.view.Panel;
 import com.laifu.livecolorful.view.PullDownView;
 import com.laifu.livecolorful.view.PullDownView.OnRefreshListener;
 
@@ -60,18 +70,37 @@ public class IndexActivity extends LiveBaseActivity {
 	 */
 	ListView silding1_listview;
 	
+	
+	Panel topPanel;
 	@Override
 	public void initPages() {
 		// TODO Auto-generated method stub
-		myDiary = findViewById(R.id.mydiary_view);
-		mydiary_image = (ImageView) findViewById(R.id.wdrl_image);
 
-		
-		
 		initTitle();
 		initListView();
 		initSildingEdit();
+		initWDRLView();
+		
 	}
+	
+	
+	@Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    	if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction()==KeyEvent.ACTION_DOWN) {
+//    		topPanel.setOpen(!topPanel.isOpen(), false);
+    		if(topPanel.isOpen()){
+    			topPanel.setVisibility(View.GONE);
+    			topPanel.setOpen(false, false);
+    			return false;
+    		}
+    		if(sd1.isOpened()){
+    			cancleSliding1();
+    			return false;
+    		}
+    	}
+    	return super.onKeyDown(keyCode, event);
+    }
+	
 	/****
 	 * 初始化title 左右两个button
 	 */
@@ -81,6 +110,8 @@ public class IndexActivity extends LiveBaseActivity {
 		btn_left.setOnClickListener(this);
 		btn_right.setOnClickListener(this);
 	}
+	
+	IndexLaifuAdapter laifuAdapter;
 	/***
 	 * 初始化页面正文的listview
 	 */
@@ -98,7 +129,14 @@ public class IndexActivity extends LiveBaseActivity {
 		listView = pullDownView.getListView();
 
 		pullDownView.showFooterView(false);
+		
+		listView.setDividerHeight(0);
+		
+		laifuAdapter=new IndexLaifuAdapter(this);
+		listView.setAdapter(laifuAdapter);
 	}
+	
+	IndexXingchengdanAdapter xingchengdan_adapter;
 	/***
 	 * 初始化编辑按钮出发的抽屉
 	 */
@@ -120,22 +158,99 @@ public class IndexActivity extends LiveBaseActivity {
 		{
 			@Override
 			public void onDrawerOpened() {
-				mydiary_image.setImageResource(R.drawable.wdrl_zk_btn);// 响应开抽屉事件
+//				mydiary_image.setImageResource(R.drawable.wdrl_zk_btn);// 响应开抽屉事件
 				// ，把图片设为向下的
 			}
 		});
 		sd1.setOnDrawerCloseListener(new SlidingDrawer.OnDrawerCloseListener() {
 			@Override
 			public void onDrawerClosed() {
-				mydiary_image.setImageResource(R.drawable.wdrl_sq_btn);// 响应关抽屉事件
+//				mydiary_image.setImageResource(R.drawable.wdrl_sq_btn);// 响应关抽屉事件
 				silding1_black.setVisibility(View.GONE);
 				sd1.setVisibility(View.GONE);
 			}
 		});
 		
+		xingchengdan_adapter=new IndexXingchengdanAdapter(this);
+		silding1_listview.setAdapter(xingchengdan_adapter);
 	}
 	
+	boolean hasInit=false;
+	View contentView;
+	View no_wdrl_view;
+	ListView sliding2_listview;
+	Button index_add_xingcheng;
+	IndexMyDiaryAdapter wdrl_adapter;
+	public void initWDRLView(){
+		myDiary = findViewById(R.id.mydiary_view);
+		mydiary_image = (ImageView) findViewById(R.id.wdrl_image);
+		
+		myDiary.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if(!hasInit){
+					hasInit=true;
+					int diaryheight=myDiary.getHeight();
+					int titleheight=findViewById(R.id.head_view).getHeight();
+//					int handleHeight=findViewById(R.id.panelHandle).getHeight();
+					int handleHeight=DensityUtil.dip2px(IndexActivity.this, 30);
+					int height=outMetrics.heightPixels-titleheight-diaryheight-handleHeight;
+					Log.i("aa", height+"=="+outMetrics.heightPixels+"~~"+titleheight+"~~"+diaryheight+"~~"+handleHeight);
+					contentView.setLayoutParams(new LayoutParams(-1,height-35));
+					topPanel.setVisibility(View.VISIBLE);
+					topPanel.setOpen(true, true);
+				}else{
+					if(topPanel.isOpen()){
+						topPanel.setVisibility(View.GONE);
+						topPanel.setOpen(false, false);
+					}else{
+						topPanel.setVisibility(View.VISIBLE);
+						topPanel.setOpen(true, true);
+						
+					}
+				}
+			}
+		});
+		
+		topPanel  = (Panel) findViewById(R.id.topPanel);
+		topPanel.setVisibility(View.GONE);
+		contentView= findViewById(R.id.panelContent);
+		topPanel.setOnPanelListener(new Panel.OnPanelListener() {
+			
+			@Override
+			public void onPanelOpened(Panel panel) {
+				// TODO Auto-generated method stub
+				Log.i("aa", "open");
+				mydiary_image.setImageResource(R.drawable.sq_btn);
+			}
+			
+			@Override
+			public void onPanelClosed(Panel panel) {
+				// TODO Auto-generated method stub
+				Log.i("aa", "close");
+				topPanel.setVisibility(View.GONE);
+				mydiary_image.setImageResource(R.drawable.zk_btn);
+			}
+		});
+//		topPanel.setInterpolator(new BounceInterpolator(Type.OUT));
 	
+		
+		no_wdrl_view=findViewById(R.id.no_wdrl_view);
+		sliding2_listview=(ListView)findViewById(R.id.sliding2_listview);
+		index_add_xingcheng=(Button)findViewById(R.id.index_add_xingcheng);
+		index_add_xingcheng.setOnClickListener(this);
+	
+		// 1 测试没有我的日历ui
+//		sliding2_listview.setVisibility(View.GONE);
+//		no_wdrl_view.setVisibility(View.VISIBLE);
+		// 2 测试有的我日历的ui
+		sliding2_listview.setVisibility(View.VISIBLE);
+		no_wdrl_view.setVisibility(View.GONE);
+		wdrl_adapter=new IndexMyDiaryAdapter(this);
+		sliding2_listview.setAdapter(wdrl_adapter);
+	}
 	
 	
 	
@@ -146,10 +261,16 @@ public class IndexActivity extends LiveBaseActivity {
 	@Override
 	protected void onClickListener(int viewId) {
 		// TODO Auto-generated method stub
+		Intent intent;
 		switch(viewId){
 		case R.id.left:
 			break;
 		case R.id.right:
+			if(topPanel.isOpen()){
+    			topPanel.setVisibility(View.GONE);
+    			topPanel.setOpen(false, false);
+    			return ;
+    		}
 			silding1_black.setVisibility(View.VISIBLE);
 			sd1.setVisibility(View.VISIBLE);
 			sd1.animateOpen();
@@ -160,6 +281,10 @@ public class IndexActivity extends LiveBaseActivity {
 			break;
 		case R.id.cjxc_add_view:
 			// 点击创建行程单
+			intent=new Intent(this,EditXingchengdanActivity.class);
+			startActivity(intent);
+			break;
+		case R.id.index_add_xingcheng:
 			break;
 		}
 	}

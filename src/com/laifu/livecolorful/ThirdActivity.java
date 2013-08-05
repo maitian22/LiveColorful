@@ -12,14 +12,15 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,6 +29,7 @@ import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.laifu.livecolorful.adapter.MyRountListAdapter;
 import com.laifu.livecolorful.tool.Constant;
 
 public class ThirdActivity extends LiveBaseActivity {
@@ -64,7 +66,7 @@ public class ThirdActivity extends LiveBaseActivity {
 			my_info_arrow;
 	public SharedPreferences mPre;
 	private int mCurrentPage;
-	private ListView my_rount_list;
+	private ListView my_rount_list, my_fans_list, my_attation_list;
 	private RelativeLayout my_rount, my_attation, my_fans, my_info;
 	private Context mContext;
 	private MyInfoCtrl mMyInfoCtrl;
@@ -127,12 +129,51 @@ public class ThirdActivity extends LiveBaseActivity {
 		}
 	}
 
+	AdapterView.OnItemClickListener mRountListListener = new AdapterView.OnItemClickListener() {
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
+			// TODO Auto-generated method stub
+			Log.i(TAG, "111111111111");
+		}
+
+	};
+
 	private void InitRountListView() {
-		SimpleAdapter adapter = new SimpleAdapter(this,
-				GlobaleData.getMyRouontListData(), R.layout.my_rount_list,
-				new String[] { "title", "info", "img" }, new int[] {
-						R.id.title, R.id.info, R.id.img });
+		/*
+		 * SimpleAdapter adapter = new SimpleAdapter(this,
+		 * GlobaleData.getMyRouontListData(), R.layout.my_rount_list, new
+		 * String[] { "title", "person","xingcheng", "img" }, new int[] {
+		 * R.id.title, R.id.person_number,R.id.xichenggeshu, R.id.img });
+		 * my_rount_list.setAdapter(adapter);
+		 * my_rount_list.setOnItemClickListener(mRountListListener);
+		 * my_rount_list.setDividerHeight(0);
+		 */
+
+		MyRountListAdapter adapter = new MyRountListAdapter(this,
+				GlobaleData.getMyRouontListData(), new String[] { "leftimg",
+						"lines", "title", "text1", "text2" }, new int[] {
+						R.id.left_img, R.id.mlines, R.id.title, R.id.text1,
+						R.id.text2 });
 		my_rount_list.setAdapter(adapter);
+		my_rount_list.setOnItemClickListener(mRountListListener);
+		my_rount_list.setDividerHeight(0);
+	}
+
+	public void InitMyFansList() {
+		SimpleAdapter adapter = new SimpleAdapter(this,
+				GlobaleData.getMyFansListData(), R.layout.my_fans_list,
+				new String[] { "img", "name", "addicon" }, new int[] {
+						R.id.img, R.id.name, R.id.add_icon });
+		my_fans_list.setAdapter(adapter);
+	}
+
+	public void InitMyAttationList() {
+		SimpleAdapter adapter = new SimpleAdapter(this,
+				GlobaleData.getMyAttationListData(), R.layout.my_fans_list,
+				new String[] { "img", "name", "addicon" }, new int[] {
+						R.id.img, R.id.name, R.id.add_icon });
+		my_attation_list.setAdapter(adapter);
 	}
 
 	private void initView() {
@@ -147,6 +188,8 @@ public class ThirdActivity extends LiveBaseActivity {
 
 		my_fans_linear = (LinearLayout) findViewById(R.id.my_fans_linear);
 		my_fans_linear.setOnClickListener(mylinearListner);
+		my_fans_list = (ListView) findViewById(R.id.my_fans_list);
+		InitMyFansList();
 		my_fans_arrow = (ImageView) findViewById(R.id.my_fans_arrow);
 		my_fans = (RelativeLayout) findViewById(R.id.my_fans);
 
@@ -154,6 +197,8 @@ public class ThirdActivity extends LiveBaseActivity {
 		my_attation_linear.setOnClickListener(mylinearListner);
 		my_attation_arrow = (ImageView) findViewById(R.id.my_attation_arrow);
 		my_attation = (RelativeLayout) findViewById(R.id.my_attation);
+		my_attation_list = (ListView) findViewById(R.id.my_attation_list);
+		InitMyAttationList();
 
 		my_info_linear = (LinearLayout) findViewById(R.id.my_info_linear);
 		my_info_linear.setOnClickListener(mylinearListner);
@@ -227,7 +272,7 @@ public class ThirdActivity extends LiveBaseActivity {
 		head_portrait.setImageBitmap(mBitmapHead);
 
 		Bitmap mBitmapCover = GlobaleData.getMyCoverPicture(this);
-		BitmapDrawable bd = new BitmapDrawable(mBitmapCover);
+		Drawable bd = ImageTools.bitmapToDrawable(mBitmapCover);
 		mAccoutBg.setBackgroundDrawable(bd);
 	}
 
@@ -271,6 +316,9 @@ public class ThirdActivity extends LiveBaseActivity {
 		InitMyInfoPicture();
 		InitCountNumbers();
 		InitBoundAccount();
+
+		Button left = (Button) findViewById(R.id.left);
+		left.setVisibility(android.view.View.VISIBLE);
 	}
 
 	@Override
@@ -291,7 +339,7 @@ public class ThirdActivity extends LiveBaseActivity {
 			void onPassClick() {
 				// TODO Auto-generated method stub
 				// setHeadPic(uri);
-				SaveBitmapToDisk(mB, "headPic");
+		//		SaveBitmapToDisk(mB, "headPic");
 				head_portrait.setImageBitmap(mB);
 				this.dismiss();
 
@@ -301,32 +349,6 @@ public class ThirdActivity extends LiveBaseActivity {
 		mShowDialog.show();
 	}
 
-	void SaveBitmapToDisk(Bitmap mBitmap, String name) {
-		String sdcardPath = Environment.getExternalStorageDirectory().getPath();
-		String dirctory = sdcardPath + "/LiveColorful/Photo";
-		File f = new File(dirctory);
-		if (!f.exists()) {
-			f.mkdirs();
-		}
-		String filePath = dirctory + "/" + name;
-		f = new File(filePath + ".png");
-
-		try {
-			f.createNewFile();
-			FileOutputStream fOut = null;
-			fOut = new FileOutputStream(f);
-			mBitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
-			fOut.flush();
-			fOut.close();
-		} catch (FileNotFoundException e) {
-			Log.i(TAG, "SaveBitmapToDisk FileNotFoundException----------->");
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			Log.i(TAG, "SaveBitmapToDisk IOException----------->");
-		}
-	}
 
 	void changeCoverDialogShow(final Bitmap mB) {
 		ShowAlbumPicDialog mShowDialog = new ShowAlbumPicDialog(this, mB) {
@@ -340,7 +362,8 @@ public class ThirdActivity extends LiveBaseActivity {
 			void onPassClick() {
 				// TODO Auto-generated method stub
 				// setCoverPicture(uri);
-				SaveBitmapToDisk(mB, "CoverPic");
+				ImageTools.savePhotoToSDCard(mB, Constant.PitcturPath, "CoverPic");
+			//	SaveBitmapToDisk(mB, "CoverPic");
 				BitmapDrawable bd = new BitmapDrawable(mB);
 				mAccoutBg.setBackgroundDrawable(bd);
 				this.dismiss();
@@ -351,6 +374,7 @@ public class ThirdActivity extends LiveBaseActivity {
 	}
 
 	public void startPhotoZoom(Uri uri, int width, int height, int resultCode) {
+		Log.i(TAG, "startPhotoZoom------------>");
 		Intent intent = new Intent("com.android.camera.action.CROP");
 		intent.setDataAndType(uri, "image/*");
 		intent.putExtra("crop", "true");
@@ -387,32 +411,48 @@ public class ThirdActivity extends LiveBaseActivity {
 		protected void onPostExecute(Boolean flag) {
 			cancelProgressDialog();
 			if (doAction == 1) {
-				changeCoverDialogShow(mBitmap);
+			//	changeCoverDialogShow(mBitmap);
+				ImageTools.savePhotoToSDCard(mBitmap, Constant.PitcturPath, "CoverPic");
+				Drawable bd = ImageTools.bitmapToDrawable(mBitmap);
+				mAccoutBg.setBackgroundDrawable(bd);
 			} else if (doAction == 2) {
-				headPortraitDialogShow(mBitmap);
+			//	headPortraitDialogShow(mBitmap);
+				ImageTools.savePhotoToSDCard(mBitmap, Constant.PitcturPath, "headPic");
+				head_portrait.setImageBitmap(mBitmap);
 			}
 		}
 	}
+
+	private Bitmap photo;
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
+		Uri uri = null;
 		int width, height;
-		Log.i(TAG, "onActivityResult--------->");
-		if (data == null)
-			return;
-		final Uri uri = data.getData();
+		Log.i(TAG, "onActivityResult requestCode:" + requestCode);
+		if(photo!=null)
+			photo.recycle();
+		if (data == null){
+			String filename = mPre.getString(Constant.PICTURE_CAPTURE_IMAGE_NAME, "");
+			if(filename.equals("")){
+				Log.i(TAG,"filename euqual null");
+				return;
+			}
+			uri = Uri.fromFile(new File(Constant.PitcturPath,filename));
+		}else
+			uri = data.getData();
 		if (requestCode == Constant.RESULT_PICTURE_COVER) {
 			Log.i(TAG, "requestCode = RESULT_PICTURE_COVER");
 			Bundle extras = data.getExtras();
 			if (extras != null) {
-				Bitmap photo = extras.getParcelable("data");
+				photo = extras.getParcelable("data");
 				new PictureChangeTask(photo, 1).execute();
 			}
 		} else if (requestCode == Constant.PICTURE_COVER_CAPTUIE) {
-			width = getWindowManager().getDefaultDisplay().getWidth() / 2;
-			height = mAccoutBg.getLayoutParams().height / 2;
+			width = getWindowManager().getDefaultDisplay().getWidth()/2;
+			height = mAccoutBg.getLayoutParams().height/2;
 			Log.i(TAG, "width:" + width + ",height:" + height);
 			startPhotoZoom(uri, width, height, Constant.RESULT_PICTURE_COVER);
 		} else if (requestCode == Constant.PICTURE_HEAD_CAPTUIE) {
@@ -423,10 +463,10 @@ public class ThirdActivity extends LiveBaseActivity {
 		} else if (requestCode == Constant.RESULT_PACTURE_HEAD) {
 			Bundle extras = data.getExtras();
 			if (extras != null) {
-				Bitmap photo = extras.getParcelable("data");
+				photo = extras.getParcelable("data");
 				new PictureChangeTask(photo, 2).execute();
 			}
 		}
-	}
 
+	}
 }

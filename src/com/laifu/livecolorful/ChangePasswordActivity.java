@@ -38,5 +38,4 @@ public class ChangePasswordActivity extends Activity implements Button.OnClickLi
 		}else if(v==TitleRight){
 		}
 	}
-	
 }

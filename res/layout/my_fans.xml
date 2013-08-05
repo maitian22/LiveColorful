@@ -7,4 +7,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:visibility="invisible" >
     
+    <ListView 
+        android:id="@+id/my_fans_list"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        />
+    
 </RelativeLayout>

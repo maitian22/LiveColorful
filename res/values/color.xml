@@ -10,10 +10,14 @@
 	<color name="rount_list_num_color">#2b5e89</color>
 	<color name="rount_list_introduce_color">#464646</color>
 	<color name="black_percent_20">#33000000</color>
+	<color name="white_percent_20">#33ffffff</color>
 	<color name="my_info_edit_button">#438fd9</color>
 	<color name="black_percent_85">#d9000000</color>
 	<color name="show_pic_dialog_bg">#1e1518</color>
 	<color name="my_buddy_footer_color">#666666</color>
 	<color name="green">#81c04b</color> 
 	<color name="button_grey">#bcbcbc</color>
+	<color name="transparent">#00000000</color>
+	<color name="red_line">#33b5b7</color>
+	<color name="login_laifu">#f29600</color>
 </resources>

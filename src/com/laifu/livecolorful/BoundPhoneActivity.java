@@ -169,5 +169,4 @@ public class BoundPhoneActivity extends Activity implements TextWatcher,
 			finish();
 		}
 	}
-
 }

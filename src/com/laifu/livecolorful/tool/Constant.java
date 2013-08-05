@@ -2,6 +2,7 @@ package com.laifu.livecolorful.tool;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.os.Environment;
 
 /**
  * 
@@ -104,15 +105,19 @@ public class Constant {
 
 	public static final String IMG = "img";
 	public static final String IMGURL = "imgurl";
-	
+
 	// sharePreference name
 	public static final String HEAD_PORTRAIT_PATH = "head_protrait_path";
 	public static final String PICTURE_COVER_PATH = "picture_cover_path";
 	public static final String CURRENT_THIRD_ACTIVITY_PAGE = "current_third_activity_page";
-	
+	public static final String PICTURE_CAPTURE_IMAGE_NAME = "pictempName";
+
 	public static final int HEAD_PIC_CAPTURE = 1;
-	public static final int PICTURE_COVER_CAPTUIE  = 2;
+	public static final int PICTURE_COVER_CAPTUIE = 2;
 	public static final int RESULT_PICTURE_COVER = 3;
 	public static final int PICTURE_HEAD_CAPTUIE = 4;
 	public static final int RESULT_PACTURE_HEAD = 5;
+
+	public static final String PitcturPath = Environment
+			.getExternalStorageDirectory().getPath() + "/LiveColorful/Photo";
 }

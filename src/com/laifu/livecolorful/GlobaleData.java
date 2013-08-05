@@ -16,45 +16,314 @@ import android.preference.PreferenceManager;
 
 public class GlobaleData {
 	/************************我的帐号******************************/
-	
+	/*获取最热行程单*/
+	public static List<Map<String, Object>> getHotestData(){
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("text1", "23580226个成员");
+		map.put("text2", "67556个行程");
+		map.put("text3", "分类排名：第1位");
+		list.add(map);
+
+		map = new HashMap<String, Object>();
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("text1", "23580226个成员");
+		map.put("text2", "67556个行程");
+		map.put("text3", "分类排名：第1位");
+		list.add(map);
+
+		map = new HashMap<String, Object>();
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("text1", "23580226个成员");
+		map.put("text2", "67556个行程");
+		map.put("text3", "分类排名：第1位");
+		list.add(map);
+
+		map = new HashMap<String, Object>();
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("text1", "23580226个成员");
+		map.put("text2", "67556个行程");
+		map.put("text3", "分类排名：第1位");
+		list.add(map);
+
+		map = new HashMap<String, Object>();
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("text1", "23580226个成员");
+		map.put("text2", "67556个行程");
+		map.put("text3", "分类排名：第1位");
+		list.add(map);
+
+		map = new HashMap<String, Object>();
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("text1", "23580226个成员");
+		map.put("text2", "67556个行程");
+		map.put("text3", "分类排名：第1位");
+		list.add(map);
+		return list;
+	}
+	/*获取最新的行程单*/
+	public static List<Map<String, Object>> getLatestData(){
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("text1", "创建于七分钟前");
+		list.add(map);
+
+		map = new HashMap<String, Object>();
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("text1", "创建于七分钟前");
+		list.add(map);
+
+		map = new HashMap<String, Object>();
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("text1", "创建于七分钟前");
+		list.add(map);
+
+		map = new HashMap<String, Object>();
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("text1", "创建于七分钟前");
+		list.add(map);
+
+		map = new HashMap<String, Object>();
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("text1", "创建于七分钟前");
+		list.add(map);
+
+		map = new HashMap<String, Object>();
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("text1", "创建于七分钟前");
+		list.add(map);
+		return list;
+	}
+	/*获取朋友推荐的行程单*/
+	public static List<Map<String, Object>> getMyFriendAdviceData(){
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("text0", "草莓金丢丢");
+		map.put("text1", "五分钟前创建了");
+		list.add(map);
+
+		map = new HashMap<String, Object>();
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("text0", "草莓金丢丢");
+		map.put("text1", "五分钟前创建了");
+		list.add(map);
+
+		map = new HashMap<String, Object>();
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("text0", "草莓金丢丢");
+		map.put("text1", "五分钟前创建了");
+		list.add(map);
+
+		map = new HashMap<String, Object>();
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("text0", "草莓金丢丢");
+		map.put("text1", "五分钟前创建了");
+		list.add(map);
+
+		map = new HashMap<String, Object>();
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("text0", "草莓金丢丢");
+		map.put("text1", "五分钟前创建了");
+		list.add(map);
+
+		map = new HashMap<String, Object>();
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("text0", "草莓金丢丢");
+		map.put("text1", "五分钟前创建了");
+		list.add(map);
+		return list;
+	}
+	/*获取附近行程单*/
+	public static List<Map<String, Object>> getMyNearByData(){
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("img1", R.drawable.dz_blue_btn);
+		map.put("text1", "1.5km");
+		list.add(map);
+
+		map = new HashMap<String, Object>();
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("img1", R.drawable.dz_blue_btn);
+		map.put("text1", "1.5km");
+		list.add(map);
+
+		map = new HashMap<String, Object>();
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("img1", R.drawable.dz_blue_btn);
+		map.put("text1", "1.5km");
+		list.add(map);
+
+		map = new HashMap<String, Object>();
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("img1", R.drawable.dz_blue_btn);
+		map.put("text1", "1.5km");
+		list.add(map);
+
+		map = new HashMap<String, Object>();
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("img1", R.drawable.dz_blue_btn);
+		map.put("text1", "1.5km");
+		list.add(map);
+
+		map = new HashMap<String, Object>();
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("img1", R.drawable.dz_blue_btn);
+		map.put("text1", "1.5km");
+		list.add(map);
+		return list;
+	}
+	/*获取我的关注*/
+	public static List<Map<String, Object>> getMyAttationListData(){
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("img", R.drawable.sina_on_btn);
+		map.put("name", "维他命");
+		map.put("addicon", R.drawable.arraw);
+		list.add(map);
+		
+	    map = new HashMap<String, Object>();
+		map.put("img", R.drawable.sina_on_btn);
+		map.put("name", "维他命");
+		map.put("addicon", R.drawable.arraw);
+		list.add(map);
+		
+		map = new HashMap<String, Object>();
+		map.put("img", R.drawable.sina_on_btn);
+		map.put("name", "维他命");
+		map.put("addicon", R.drawable.arraw);
+		list.add(map);
+		return list;
+	}
+	/*获取我的粉丝*/
+	public static List<Map<String, Object>> getMyFansListData(){
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("img", R.drawable.sina_on_btn);
+		map.put("name", "维他命");
+		map.put("addicon", R.drawable.gz_btn);
+		list.add(map);
+		
+	    map = new HashMap<String, Object>();
+		map.put("img", R.drawable.sina_on_btn);
+		map.put("name", "维他命");
+		map.put("addicon", R.drawable.gz_btn);
+		list.add(map);
+		
+		map = new HashMap<String, Object>();
+		map.put("img", R.drawable.sina_on_btn);
+		map.put("name", "维他命");
+		map.put("addicon", R.drawable.gz_btn);
+		list.add(map);
+		return list;
+	}
 	/*获取我的行程单*/
 	public static List<Map<String, Object>> getMyRouontListData(){
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
 		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
-		map.put("info", "23580266个成员     67556个行程");
-		map.put("img", R.drawable.sina_on_btn);
+		map.put("text1", "23580266个成员");
+		map.put("text2", "67556个行程");
 		list.add(map);
 
 		map = new HashMap<String, Object>();
-		map.put("title", "建筑系12级3班 同路人");
-		map.put("info", "52个成员     47个行程");
-		map.put("img", R.drawable.sina_on_btn);
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("text1", "23580266个成员");
+		map.put("text2", "67556个行程");
 		list.add(map);
 
 		map = new HashMap<String, Object>();
-		map.put("title", "建筑系12级3班 同路人");
-		map.put("info", "52个成员     47个行程");
-		map.put("img", R.drawable.sina_on_btn);
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("text1", "23580266个成员");
+		map.put("text2", "67556个行程");
 		list.add(map);
 
 		map = new HashMap<String, Object>();
-		map.put("title", "建筑系12级3班 同路人");
-		map.put("info", "52个成员     47个行程");
-		map.put("img", R.drawable.sina_on_btn);
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("text1", "23580266个成员");
+		map.put("text2", "67556个行程");
 		list.add(map);
 
 		map = new HashMap<String, Object>();
-		map.put("title", "建筑系12级3班 同路人");
-		map.put("info", "52个成员     47个行程");
-		map.put("img", R.drawable.sina_on_btn);
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("text1", "23580266个成员");
+		map.put("text2", "67556个行程");
 		list.add(map);
 
 		map = new HashMap<String, Object>();
-		map.put("title", "建筑系12级3班 同路人");
-		map.put("info", "52个成员     47个行程");
-		map.put("img", R.drawable.sina_on_btn);
+		map.put("leftimg", R.drawable.sina_on_btn);
+		map.put("lines", R.color.red_line);
+		map.put("title", "张根硕全球电视通告-中国歌迷会北京分会朝阳区分会");
+		map.put("text1", "23580266个成员");
+		map.put("text2", "67556个行程");
 		list.add(map);
 		return list;
 	}

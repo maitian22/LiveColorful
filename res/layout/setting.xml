@@ -27,7 +27,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/activity_setting_text_margin"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
                     android:text="通知声音提醒"
                     android:textSize="@dimen/activity_setting_text_size" />
 
@@ -36,7 +38,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_margin="@dimen/activity_setting_text_margin"
+                    android:layout_margin="@dimen/activity_my_info_margin_top"
                     android:background="@drawable/ic_checkbox_checked1" />
 
                 <LinearLayout
@@ -50,7 +52,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/mline"
-                    android:layout_margin="@dimen/activity_setting_text_margin"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
                     android:text="闹钟声音提醒"
                     android:textSize="@dimen/activity_setting_text_size" />
 
@@ -60,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_below="@id/mline"
-                    android:layout_margin="@dimen/activity_setting_text_margin"
+                    android:layout_margin="@dimen/activity_my_info_margin_top"
                     android:background="@drawable/ic_checkbox_unchecked1" />
 
                 <LinearLayout
